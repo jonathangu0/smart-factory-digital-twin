@@ -1,0 +1,25 @@
+# --- Old working folder (kept locally, not published). Safe to delete by hand. ---
+twin/
+
+# --- Runtime output ---
+shots/
+*.png
+!docs/img/*.png
+logs/
+*.log
+
+# --- Python ---
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+*.tmp
+_*.py
+
+# --- Large geometry buffer is tracked with Git LFS (see .gitattributes).
+#     If you are NOT using LFS, uncomment the next line to keep it local only. ---
+# assets/*.bin

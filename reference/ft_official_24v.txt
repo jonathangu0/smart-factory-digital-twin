@@ -1,0 +1,3769 @@
+  TRAINING FACTORY INDUSTRY 4.0
+
+                                                   Activity booklet
+
+1
+   Contents
+
+   Introduction                                                         p. 4
+
+   Industry 4.0 New developments for Training Factory Industry 4.04.0   p. 6
+
+   Getting started                                                      p. 8
+
+   The individual factory components                                    p. 9
+
+   Vacuum Suction Gripper 24V (VGR)                                     p. 9
+
+   Automated high-bay warehouse 24V (HBW)                               p.10
+
+   Environmental sensor                                                 p.10
+
+   Multi-processing station with kiln 24V (MPO)                         p.11
+
+   Sorting line with colour recognition 24V (SLD)                       p.12
+
+   Environmental station with surveillance camera 24V (SSC)             p.14
+
+   Surveillance camera in multi-processing station                      p.15
+
+   Environmental sensor and photo resistance in high-bay warehouse      p.15
+
+   Input/output station with colour detection and NFC Reader 24V (SSC)  p.15
+
+   TXT controller with adapter board                                    p.16
+
+   Factory status display                                               p.16
+
+   Block diagram of the factory                                         p.17
+
+   Network structure of the factory                                     p.18
+
+   Commissioning and adapting the SIMATIC controller CPU1512SP          p.19
+
+   Commissioning and adapting the SIMATIC controller CPU1516F
+
+   with ET200SP on PROFINET IRT                                         p.35
+
+   Connecting the Training Factory Industry 4.04.0 to the Internet      p.55
+
+   Connecting the nano Router TP-Link (WR802N) in WISP mode             p.55
+
+   Training Factory Industry 4.0dashboard in the fischertechnik cloud   p.66
+
+   User log-in                                                          p.66
+
+   Cloud connection                                                     p.67
+
+   Factory dashboard                                                    p.69
+
+   Dashboard camera                                                     p.72
+
+   Environmental station dashboard                                      p.73
+
+   Operating the factory with the fischertechnik cloud                  p.76
+
+   Task 1                                                               p.77
+
+   Task 2                                                               p.78
+
+   Task 3                                                               p.81
+
+   Task 4                                                               p.81
+
+   Task 5                                                               p.82
+
+   Task 6                                                               p.84
+
+   Task 7                                                               p.85
+
+   Task 8                                                               p.86
+
+2
+   Training Factory Industry 4.0fischertechnik Node-RED dashboard              p.87
+   Calibrating the system in the Training Factory Industry 4.0 fischertechnik
+   Node-RED Dashboard                                                          p.92
+   Component description                                                       p.98
+   Factory module assignment plans                                             p.109
+   Programming tasks                                                           p.123
+                                                                               p.124
+          Programming task 1                                                   p.134
+          Programming task 2                                                   p.136
+          Programming task 3                                                   p.138
+          Programming task 4                                                   p.140
+          Programming task 5                                                   p.142
+          Programming task 6                                                   p.145
+          Programming task 7
+
+3
+ Introduction
+
+                                                     Digitisation in industrial production
+                                                     calls for stronger networking and
+                                                     smarter information at all levels of
+                                                     production. With fischertechnik
+                                                     Training Factory Industry 4.04.0,
+                                                     these digitisation activities can be
+                                                     simulated, learned and applied on a
+                                                     small scale before they are
+                                                     implemented on a large scale.
+ A highly flexible, modular, inexpensive and robust training and simulation model
+ which is extremely easy to use.
+
+  The fischertechnik learning environment can be used to learn about and
+  comprehend Industry 4.0 applications in vocational school and training
+  applications, and can also be used for research, teaching and development at
+  universities in companies and in IT departments. The simulation depicts the
+  ordering process, the production process and the delivery process in digitised
+  and networked process steps.
+
+  It consists of factory modules like storage and retrieval stations, vacuum
+  suction grippers, high-bay warehouse, multi-processing station with kiln, a
+  sorting section with colour detection, an environmental sensor and a pivoting
+  camera.
+
+  After workpieces are ordered via the dashboard in the fischertechnik cloud,
+  they go through the individual factory modules. The current status is shown in
+  the fischertechnik cloud. The integrated environmental sensor reports values
+  for temperature, humidity, air pressure and air quality. The camera sees the
+  entire system through the vertical and horizontal pan range and can thus be
+  used for web-based remote surveillance.
+
+4
+  Individual workpieces are tracked using NFC (Near Field Communication): A
+  unique identification number (ID) is assigned to each workpiece. This enables
+  traceability and visibility of the current status of the workpieces in the
+  machining process.
+  The Training Factory Industry 4.04.0 can be controlled by a SIMATIC S7-1500
+  programmable logic controller (PLC) made by SIEMENS (not included in the
+  scope of delivery for the Training Factory Industry 4.04.0).
+  Note: Control systems from other manufacturers may also be used. Then, the
+  source codes can be imported to create the programs, depending on the
+  controller used. These are available at:
+  https://github.com/fischertechnik/plc_training_factory_24v/tree/master
+  /PLC_SCL_sources
+  A TXT controller serves as MQTT broker and interface to the fischertechnik
+  cloud. MQTT (Message Queuing Telemetry Transport) is an open message
+  protocol that enables the transmission of data in the form of messages between
+  devices.
+  Communication between the PLC and TXT controller is carried out using an IoT
+  gateway via OPC UA. OPC UA (OPC Unified Architecture) is a standard for
+  exchanging data across different platforms.
+
+5
+        Industry 4.0 New developments for Training Factory Industry 4.04.0
+                                                         The popular, fully-automated fischertechnik factory
+                                                         simulation is the basis for developing Training Factory
+                                                         Industry 4.04.0. Here is a link to a video for anyone
+                                                         interested in the simulation, or anyone just getting started
+                                                         working with it. The video provides a good overview of how
+                                                         the system works:
+                                                         https://youtu.be/BApxuYlsT_w
+
+                                 The vacuum suction gripper fits the stacker crane with workpieces. This stores
+                                 the workpieces in the high bay, sorted by colour Next, the workpieces are
+                                 brought to the multi-processing station where they are processed. Then the
+                                 machined workpieces are sorted by colour in the sorting line and transported
+                                 to storage locations. From there, the vacuum suction gripper transports the
+                                 workpieces back to the high-bay warehouse. This is a never-ending,
+                                 repetitive cycle.
+
+New additions to Training Factory Industry 4.04.0 include:
+    - Additional input/output station with quality control
+    - Sensor station with integrated camera and environmental sensor
+    - A SIEMENS-SPS SIMATIC S7-1500 as controller
+         (not included in the scope of delivery for the Training Factory Industry 4.04.0)
+    - Example programs written in standard language for SIMATIC S7-1500
+    - Connecting to the fischertechnik cloud
+    - A TXT controller as MQTT broker and interface to the
+         fischertechnik cloud
+    - IoT gateway (Raspberry Pi) with Node-RED
+    - Using NFC/RFID to identify workpieces
+    - Integrated WiFi router
+    - Presenting and using data on a dashboard in the fischertechnik cloud
+    - Displaying data and calibrating the stations in a Node-RED dashboard
+    - Displaying the current system status via a traffic light
+
+6
+The individual innovations are explained in more detail in the following chapters.
+
+The following variants are still available for Learning Factory 4.0 24V:
+    · 554868 Learning factory 4.0 24V
+         Learning Factory 4.0 24V without PLC and without PLC connection board.
+    · 560841 Learning Factory 4.0 24V with PLC connection board
+         Learning Factory 4.0 24V without PLC but with PLC connection board and a desktop power supply
+         24V, 280W. A separate PLC can be connected via the PLC connection board.
+    · 560840 Learning Factory 4.0 24V compl. with PLC S7-1500
+         Learning Factory 4.0 24V complete with PLC S7-1500 with PLC connection board and a desktop power
+         supply 24V, 280W.
+
+Software for the SIEMENS PLC SIMATIC S7-1500
+The SIMATIC S7-1500 is programmed using version 16 of the TIA portal and the programming language structured
+text (ST or SCL)
+Software for TXT controller: C/C++ API programming interface
+The software applications are written in C/C++ and are already loaded on the controller in the ready-to-
+start status. The corresponding C/C++ library and the API are published on Github:
+https://github.com/fischertechnik/plc_training_factory_24v.
+This library can be used to write customised C/C++ programs for the learning factory.
+Software for the IoT gateway
+A finished Node-RED application is already loaded onto the IoT gateway.
+Node-RED is available here as open-source software from the OpenJS Foundation:
+https://nodered.org.
+
+ First steps
+
+Once you have carefully unpacked the Learning Factory 4.0 and removed
+the transport lock, carry out a visual inspection to see whether any
+components have become loose or damaged during transport. Attach
+any loose components back in the right place. Check whether all cables
+and hoses are connected. You can connect non-connected cables
+correctly with the aid of the assignment diagrams.
+
+7
+  554868 Learning Factory 4.0 24V
+Connect the Learning Factory adapter boards to
+the PLC. This can be done using either flat ribbon
+cables at the corresponding 34-pole ST1
+connectors or via the terminals.
+Note: For further details on the assignment diagrams, see the
+chapter Assignment diagrams for the factory modules.
+
+  560840 Learning Factory 4.0 24V compl. with PLC S7-1500
+Note that in the case of the Learning Factory with
+PLC, the Learning Factory has already been
+calibrated on delivery. Please check the serial
+number of the PLC, e.g. "S1001" (sticker on the
+model and on the PLC connection board). It is
+essential that the PLC and the corresponding
+model are only connected with the same serial
+number. This is the only way to ensure that the
+calibration data match.
+
+  560841 Learning Factory 4.0 24V with PLC connection
+  board
+Mount the PLC on the top-hat rail on the PLC connection board and use
+the PLC with this.
+Note: For further details on the assignment of the PLC connection board,
+see the chapter Assignment diagrams for the factory modules.
+
+8
+  560841 Learning Factory 4.0 24V with PLC connection board and
+  560840 Learning Factory 4.0 24V compl. with PLC S7-1500
+Connect the PLC using the two cables provided. The connections are marked (I) and (II) on both the model
+and the PLC connection board.
+Note: For further details on the assignment of the connection cables, see the chapter Assignment diagrams
+for the factory modules.
+
+Connect the PLC SIMATIC S7-1500 to the nano router TP-link using one of the network cables provided and use
+the second network cable to connect the PLC to the IOT Gateway (Raspberry Pi 4), see illustration.
+Note: Refer also to the chapter Network structure of the factory
+9
+Now prepare the 24V power supply for the Learning Factory 4.0:
+  554868 Learning Factory 4.0 24V
+
+Please use an external 24V power supply (min. 10A recommended). This power supply is not included in the
+scope of supply of this variant.
+
+  560841 Learning Factory 4.0 24V with PLC connection board and
+  560840 Learning Factory 4.0 24V compl. with PLC S7-1500
+
+The 24V power supply is connected via the 6-pole connection on the PLC board. Now plug the 24V power
+supply into the socket.
+Check the fuses on the PLC connection board. The six LEDs at the edge of the PLC connection board now
+have to light up green.
+Switch the PLC and the TXT controller on (ON/OFF) to test them. If everything is working, the display should
+start up, the PLC and the TXT controller boot and the control lamps light up.
+Finally, equip the high-bay shelf with the 9 empty black containers provided.
+560840 Learning Factory 4.0 24V compl. with PLC S7-1500:
+With this variant, the following chapters can be skipped and the factory can be put into operation as
+explained in the chapter Connecting the Learning Factory 4.0 to the internet.
+
+10
+The individual factory components
+
+This chapter introduces the individual factory components and briefly explains their function.
+
+What are robots?
+
+The Association of German Engineers (VDI) defines industrial robots in VDI Guideline 2860 as follows:
+
+"Industrial robots are universally applicable multi-axis motion machines whose movements with respect
+to movement sequence and paths or angles are freely programmable and, if necessary, sensor-guided (i.e.,
+without mechanical or human intervention). They can be equipped with grippers, tools or other means of
+production and can perform handling and/or manufacturing tasks".
+
+  Vacuum Suction Gripper 24V (VGR)
+                                                     The 3-axis robot with vacuum suction gripper
+                                                     positions workpieces quickly and precisely in
+                                                     three-dimensional space. Workspace: X-axis
+                                                     270°, Y-axis (forward/backward) 140 mm, Z-axis Buttons
+                                                     (up/down) 120 mm. The 3D vacuum suction
+                                                     gripper, therefore, is an industrial robot that can
+                                                     be used for handling tasks. The vacuum gripper
+                                                     picks up workpieces and move them within a
+                                                     working space. This
+
+working space is based on the robot's kinematic structure and defines the area that the robot Encoder engine
+effector can work within.
+In the case of the vacuum suction pad, the vacuum unit is the effector and the working space
+corresponds to a hollow cylinder whose vertical axis coincides with the robot's axis of
+rotation.
+The geometric shape of the working space is based on the kinematic structure, which is shown Compressor
+
+in the illustration and which is composed of a rotary and two translational axes.
+The typical work order for this kind of robot can be subdivided into the following work steps:
+
+    · Positioning of the suction gripper on the workpiece                                       Cylinder
+
+    · Mounting the workpiece
+
+    · Transporting the workpiece within the work area
+
+    · Depositing the workpiece
+
+Positioning the suction gripper or transporting the workpiece can be defined as a point-to-point movement or as
+
+                                                                                                                                                                               3/2-way solenoid
+
+a continuous path. Controlling the individual axes takes place sequentially and/or in parallel and it ivsalsveignificantly
+
+influenced by workspace obstacles that exist in the workspace or by predefined intermediate stations. The
+
+suction gripper is controlled using a 3/2-way solenoid valve and two coupled pneumatic cylinders to generate
+
+vacuum pressure.
+
+                                                                                                Vacuum
+
+11
+    Automated high-bay warehouse 24V (HBW)
+
+What is a high-bay warehouse?
+
+                                             A high-bay warehouse is a storage
+
+              High-bay operating vice        area that saves space and allows
+
+                                             computer-aided storage and retrieval
+
+                                             of goods. In most cases, high-bay                Photo-transistor
+                                                                                                   Buttons
+    High bay                                 warehouses are designed as pallet-
+                                                                                                 Mini motor
+                                             rack  warehouses.       This                    Encoder engine
+
+                                             standardisation ensures a high
+
+                                             degree of automation and allows for
+
+                                             connection to an ERP system
+
+                    Conveyor technique with  (enterprise resource planning). High-
+                    identification
+
+                                             bay warehouses include
+
+Very efficient use of space and a large required investment. Stacker cranes store and
+
+retrieve goods that are then moved into an alley, which is located between two rows of
+
+high-bay shelves. This area is part of the pre-zone where the goods are identified. Goods
+
+are provided and delivered to the stacker crane via conveyor technology, such as chain
+
+conveyors, roller conveyors or vertical conveyors. No one should be present in this area if
+
+the storage and retrieval machines are automated. In the case of the automated high bay,
+
+a conveyor belt transports the goods.
+
+Environment sensor
+
+The environmental sensor was built on the base plate of the high-bay warehouse for space
+reasons. The electrical connections, however, are on the TXT controller.
+
+12
+    Multi-processing station with kiln 24V (MPO)
+
+                            Milling                                  The workpiece automatically passes
+    Kiln                                                             through several stations that
+                                                                     simulate different processes in the
+                                                  Suction
+
+                                                           Ejector
+
+                                                                     multi-processing station with kiln.
+
+                                                                     Different conveyor technologies,        Mini motor
+                                                                                                          Photo-transistor
+                                     Kiln slider           Conveyor  such as a conveyor belt,
+                                     Turntable                                                                 Buttons
+                                                                                                              Vacuum
+turntable and a vacuum suction gripper are used. The machining process starts with the kiln.
+                                                                                                            Compressor
+To initiate processing, the workpiece is placed on the oven pusher. In doing so, the                           Cylinder
+
+photoelectric barrier is interrupted, which causes the kiln door to open and then retract the
+
+kiln slider. At the same time, the vacuum suction gripper, which brings the workpiece to the
+
+turntable after the firing process, is requested. Following the firing process, the kiln gate is re-
+
+opened and the oven slide re-extended. The positioned vacuum suction gripper that is already
+
+in place picks the workpiece up, transports it to the turntable and places it there. The turntable
+
+positions the workpiece under the miller, lingers there for the machining time and then moves
+
+the workpiece to the pneumatically-actuated ejector. The ejector pushes the workpiece onto
+
+the conveyor belt, which conveys the workpiece to a photoelectric barrier and then to the
+
+sorting system. Passing through the photoelectric barrier causes the turntable to return to its
+
+original position and for the conveyor belt to stop with a time delay.
+
+The program runs in parallel. The system is divided into the three units: Kiln, vacuum suction
+
+gripper, and turntable. The individual processes communicate with one another, ensuring,
+
+for instance, that no collisions occur.
+
+For example, the kiln triggers the movement of the vacuum suction gripper at two points in
+
+the program sequence, which ensures that the vacuum suction gripper is not only in the right
+
+spot at the right time, but also that it does not reach into the void. Likewise, the turntable is
+
+activated after the workpiece has been deposited by the vacuum suction gripper.
+
+                                                                                                          3/2-way solenoid
+                                                                                                                 valve
+
+13
+Sorting line with colour recognition 24V (SLD)
+
+Colour recognition                              The sorting line with colour
+         Bearing locations
+                                                recognition is used to
+
+                            Ejector             automatically separate
+
+                                                workpieces of different
+
+                                                colours. Components with                         Compressor
+                                                                                                    Cylinder
+                                                the same geometry but of
+                                                                                               3/2-way solenoid
+                                                different colours are fed to                          valve
+                                                                                                    Buttons
+                                                the conveyor belt via a
+                                                                                                 Photo-transistor
+                                                colour sensor                                      Colour sensor
+
+and then separated by colour. A motor drives the conveyor belt and an impulse sensor                 Mini motor
+measures the conveying path. Pneumatic cylinders, which are assigned to the
+corresponding storage locations and operated by solenoid valves, eject the
+workpieces. Several photoelectric barriers control the flow of the workpieces and
+whether there are workpieces in the storage locations.
+
+Colour detection is carried out using an optical colour sensor that emits light, and
+determines the colour of a surface based on reflections from the surface. Thus, the colour
+sensor is strictly a reflection sensor that indicates how well a surface reflects light. The
+measured value of the sensor is therefore not proportional to the wavelength of the
+measured colour and assigning colour coordinates or colour spaces (for example RGB or
+CMYK) is not possible. In addition to an object's colour, ambient light, the object's surface
+and the distance of the object from the sensor affect the quality of the reflection. This is
+why it is critical that the colour sensor is protected from ambient light and the surfaces of
+the objects are comparable.
+
+It is also important that the sensor is installed perpendicular to the surface of the object.
+Distinguishing among the coloured workpieces is done in thresholds that compare the
+measured values of the individual colours against each other. Since the value ranges of
+different colour sensors differ, these limit values must be adjusted.
+
+Both the process and the conveyor belt start if a workpiece is placed on the conveyor belt
+and the workpiece interrupts the photoelectric barrier. For a colour to be recognised, the
+workpiece passes through a darkened lock in which a colour sensor is installed. During
+this time interval, the minimum value of the measured colour values is determined and
+assigned to the workpiece. In the time required for the workpiece to pass the colour
+sensor, the previous minimum value is compared with the current measured value, which
+may then replace the earlier measured value.
+
+The photoelectric barrier, which is located before the first ejection point, controls whether
+14
+a workpiece is ejected. Depending on the detected colour value, the corresponding
+pneumatic cylinder is time-delayed triggered after the workpiece interrupts photoelectric
+barrier. Next, the pulse button is activated. It registers the rotation of the gear that drives
+the conveyor. Unlike a time-based delay, this approach is robust in withstanding conveyor
+speed fluctuations. The ejected workpieces are fed through three slides to the respective
+depositories.
+The storage locations are equipped with photocells that recognize whether the storage
+location is filled or not. However, the photocell cannot determine how many workpieces
+are in a storage location.
+
+15
+    Environmental station with surveillance camera 24V (SSC)                                    Photo-resistor,
+                                                                                                environmental
+                                                     The environmental station with
+                                                     surveillance camera is used to record           sensor
+                                                     measured values within the factory. The
+                                                     mobile camera station is located on the    Encoder engine
+                                                     multi-processing station and visually
+                                                     monitors the system.
+                                                     The new environmental sensor and a photo
+                                                     resistor allow the air temperature,
+                                                     humidity, air pressure, air quality and
+                                                     brightness to be measured. The values are
+                                                     displayed graphically.
+
+                                                                                  Camera
+
+    The camera can be rotated using a virtual joystick and it
+
+    can be tilted to monitor the factory. The images are also
+
+    displayed on the monitor screen.
+
+    The different sensor data is controlled on an ongoing
+    basis on a user interface, the "Dashboard". The
+    movement axes of the camera can also be controlled
+    here. A LED display indicates when the set limit values
+    have been exceeded. The red LED always lights up when
+    an image from the camera is being transferred to the
+    cloud.
+
+16
+Surveillance camera in the multi-processing station              p
+
+    The two "multi-processing centre and surveillance
+    camera" modules have been combined into one
+    overall module at the factory. The advantage here is
+    that the camera is at the highest point in the factory
+    and can thus monitor the entire system. The
+    surveillance camera also has a
+    visual indicator (red light).
+    Blinking indicates images are
+    being recorded.
+
+                                                                 Control lamp red
+
+Environmental sensor and photo resistance in high-bay warehouse
+
+    The environmental sensor and photo-resistor are
+    located on the high-bay module. Both of them are
+    connected to the TXT controller,
+
+Input/output station with colour detection and NFC Reader 24V (DPS)
+
+                                                                         The in- and output station consists of a total of 3
+                                                                         work areas:
+
+                                                                          · The input and output unit
+                                                                          · Colour recognition
+                                                                          · The NFC reader
+
+17
+The photoelectric barrier at the input station detects whether a workpiece to be stored in  Colour sensor
+it is present. If this is the case, the information is sent to the                          Photo-transistor
+continuing program (vacuum suction gripper picks up the workpiece).
+Before the workpiece is processed any further, the colour sensor determines of the
+workpiece colour.
+After colour detection, different data are assigned to the workpiece. To detect a
+workpiece's colour, the vacuum suction gripper places the workpiece on the NFC reader.
+
+First, all data in the memory is deleted and the workpiece marked
+as raw.
+The reader then writes data relevant to the workpiece on the
+NFC tag NTAG213 in the workpiece.
+
+Important note: An NFC tag has a unique ID. This cannot be changed.                         The NFC reader
+
+If one or more workpieces are ordered, they will be sent to the output area after various tasks have been carried
+out. Previously, additional production data for each workpiece could be stored in the available memory on the
+NFC tag.
+
+TXT controller with adapter board                                                           Adapter board
+
+The TXT controller and an adapter board to connect the environmental sensor and photo
+resistor are also located on the input / output station. The camera is also connected here
+via a USB interface.
+
+                                                                                            TXT controller
+
+Factory status display
+
+Three LEDs indicate factory status.
+
+Green   means all stations are waiting.                                                     Status display
+Yellow  means that at least one station is active.
+Red     means an error that must be acknowledged on the dashboard in the cloud
+        for the Training Factory Industry 4.0to continue.
+
+18
+Block diagram of the factory
+
+                                                     The block diagram shows you
+                                                     how the individual factory
+                                                     components communicate
+                                                     with each other and how the
+                                                     system is integrated with the
+                                                     Internet and the fischertechnik
+                                                     cloud. The block diagram also
+                                                     shows which information the
+                                                     user can retrieve via his PC,
+                                                     tablet or smartphone.
+
+In the Training Factory Industry 4.04.0 24V, three different controllers communicate with one another, and
+are connected to one another via a Switch/Router.
+
+·   PLC (process control of the model, PLC program)
+
+·   IoT gateway (Node-RED environment as adapter between OPC/UA and MQTT, dashboard to control
+
+the model)
+
+·   TXT controller (fischertechnik sensors and connection to the fischertechnik cloud)
+
+The PLC (not included in the scope of delivery) contains process control for the entire Learning Factory.
+
+Since the MQTT interface in the PLC controller is not a standard interface, an additional IoT-Gateway
+(Raspberry Pi) with a Node-RED environment serves as an adapter to the MQTT interface. The PLC acts as
+a server, providing the data required to the IoT Gateway via the OPC/UA standard interface in the local
+network. The IoT Gateway then forwards the messages to the TXT controller.
+
+The TXT controller serves as a gateway to the fischertechnik cloud https://www.fischertechnik-cloud.com.
+
+In addition, the components camera, RFID/NFC reader, environmental sensor, BME680 and a brightness
+sensor are connected here and deliver data to the cloud.
+
+Users can access the dashboard for the Node-RED application in the IoT gateway via a web browser.
+
+19
+Network structure of the factory
+The following image represents the network structure and the standard IP addresses used:
+
+    PLC with 3 Ethernet ports
+
+    IP:  192.168.0.1
+
+    Subnet: 255.255.255.0
+
+    Gateway: 192.168.0.252
+
+    IOT Gateway (Raspberry Pi)
+
+    IP:  192.168.0.5
+
+    Subnet: 255.255.255.0       Internet
+
+    Gateway: 192.168.0.252
+
+    TXT controller (wireless)
+
+    IP:  192.168.0.10
+
+    Subnet: 255.255.255.0
+
+    Gateway: 192.168.0.252
+
+    Optional Browser PC                   nano Router TP-link (WR802N)
+
+    (Wired or wireless)                   Hotspot Router Mode
+                                          WAN: WISP
+                                          LAN1: 192.168.0.252
+
+    IP:  192.168.0.x
+
+    Subnet: 255.255.255.0
+
+    Gateway: 192.168.0.252
+
+The Training Factory Industry 4.0can be connected to wireless WiFi via a nano router TP link (WR802N) in
+WISP mode (hotspot router mode) to a wireless WAN. The Ethernet interface of the nano router must have
+an IP address of: 192.168.0.252 and is connected to the PLC (IP: 192.168.0.1). The IOT gateway must have
+IP:192.168.0.5, and is also connected to the PLC.
+
+DHCP is activated on the nano router, ensuring that the TXT controller is always supplied with the same IP
+address 192.168.0.10. Details on settings for the nano router are provided in the section Connecting Training
+Factory Industry 4.04.0
+
+NTP time synchronisation can also be completed via the Internet NVP server. Remote maintenance is not
+possible.
+
+20
+Commissioning and adapting the SIMATIC controller CPU1512SP
+The next few pages show how to connect the programmable logic controller (PLC) SIMATIC S7-1500 to the CPU
+1512SP and how to load the program solution for complete factory operation.
+This program solution is available as archive LearningFactory_4_0_24V_V02.zap16 for the TIA Portal V16, and is
+the standard solution for the Training Factory Industry 4.04.0. However, the solution can also be adapted very
+easily. for example, it can be adapted to different configurations with different CPUs in the SIMATIC ET200SP
+series, or with different ET200SP input/output modules.
+
+The assemblies used in the standard configuration are shown here:
+
+21
+The program solutions are available at:
+https://github.com/fischertechnik/plc_training_factory_24v/tree/master/PLC_SCL_sources
+Note:
+This section describes an example of commissioning for a SIEMENS SIMATIC S7-1500 controller with CPU1512SP.
+If a different controller is used, then other software tools must be used to create, and load the programs, and to
+operate the Training Factory Industry 4.04.0.
+The source codes can be imported to create the programs, depending on the controller used. These are available
+at:
+https://github.com/fischertechnik/plc_training_factory_24v/tree/master/PLC_SCL_sources
+.
+
+Structure and operation of the CPU 1512SP-1 PN
+
+Here is an overview of the elements of the CPU 1512SP-1 PN with bus adapter
+
+ Profile rail unlocking mechanism
+ Label strips
+ LEDs for status and error indicators
+ LED for displaying supply voltage
+ Operating mode switch
+ Slot for the SIMATIC Memory Card
+ Connection for supply voltage (included in the scope of delivery)
+ Cable mount and attachment for port P3 of the PROFINET interface
+ LEDs as status indicators on the PROFINET interface to ports P1, P2 and P3
+ Port P3 of the PROFINET interface: RJ45 port on the CPU
+ Individual view of the bus adapter
+ Port P1 R of the PROFINET interface: RJ45 port to bus adapter BA 2×RJ45
+ Port P2 R of the PROFINET interface: RJ45 port to bus adapter BA 2×RJ45
+
+22
+Status and error indicators
+The CPU 1512SP-1 PN and Bus-Adapter BA 2xRJ45 are equipped with the following diagnostic LEDs:
+
+ RUN/STOP LED (yellow/green LED)
+ ERROR LED (red LED)
+ MAINT LED (yellow LED)
+ LINK RX/TX-LED for the ports X1 P1 and X1 P2 (green LEDs on bus adapter)
+ POWER LED (green LED)
+ LINK RX/TX-LED for port X1 P3 (green LED on CPU)
+
+SIMATIC Memory Card
+A SIMATIC Micro Memory Card is used as the storage module for the CPUs. It is a specially pre-formatted memory
+card which is compatible with the Windows file system.
+The MMC must be inserted to operate the CPU, since the CPUs do not have an integrated load memory for the
+programs. A common SD card reader is required to read/write the SIMATIC Memory Card with a laptop/PC. It can
+be used, for instance, to copy files directly to the SIMATIC Memory Card using Windows Explorer, or delete all
+program data.
+
+Note: We recommend only inserting or removing the SIMATIC Memory Card into/from the CPU when it is powered
+down.
+
+Operating mode switch
+The operating mode switch can be used to set the current CPU operating mode. The operating mode switch is a
+toggle switch with 3 settings:
+
+Setting  Meaning           Explanation
+
+RUN      RUN operating The CPU processes the user program
+STOP
+MRES     SmToOdPe operating The CPU processes the user program
+
+         mMoedmeory reset  Setting to reset the CPU
+
+STEP 7 Professional programming software in the TIA portal
+The programming tool STEP 7 Professional is used to program and load the SPSen SIMATIC S7-1500.
+Program solutions for the Training Factory Industry 4.04.0 have been created with version V16 of STEP 7
+Professional in the TIA Portal.
+
+Further details are provided in the SIEMENS handbooks at:
+http://support.automation.siemens.com.
+
+23
+Resetting the controller and setting the IP address
+
+Before you can load program solutions to the SIMATIC S7-1500, you should reset it to default settings and set the
+IP address of the CPU 1512SP.
+The following steps can be used to reset the CPU 1512SP to default settings.
+
+              First, switch off the power supply to the controller and then remove the SIMATIC Micro Memory
+                 Card inserted in the CPU 1512SP.
+
+              To delete all program data from the SIMATIC Micro Memory Card in the CPU, you can simply insert
+                 the SIMATIC Memory Card into a common SD card reader and delete data on the card using
+                 Windows Explorer.
+
+              Then, insert the SIMATIC Memory Card back into the CPU 1512SP and switch on the power supply
+                 to the controller.
+
+Note: We recommend only inserting or removing the SIMATIC Memory Card into/from the CPU when it is powered
+down. Otherwise, it may be damaged.
+Note: You should not format the SIMATIC Memory Card, just delete the data.
+
+24
+To be able to program a SIMATIC S7-1500 controller from a laptop/PC from the CPU, you will need a TCP/IP
+connection.
+It is important for the IP addresses of the two devices to match, to ensure the computer and SIMATIC S7-1500 can
+communicate with one another via TCP/IP.
+First, we will show you how to set the IP address of a computer using a Windows 10 operating system.
+
+              Mark the network symbol below in the task bar and then click  Network settings.
+
+              In the network settings window that opens, click  Ethernet and then click  Change adapter
+                 options.
+
+25
+              Select the desired  LAN connection you want use to connect the controller, then click 
+                 Properties.
+
+              Now, select the  Properties for  internet protocol Version 4 (TCP/IPv4).
+
+26
+              Now you can use the following IP address, for instance  IP address: 192.168.0.99 and enter the
+                 following  subnet mask 255.255.255.0. Then accept the settings by pressing  OK.
+
+Now, you can assign the IP address to the CPU1512SP as shown in the following steps.
+              Connect your laptop/PC directly to one of the three Ethernet interfaces on the CPU1512SP and
+                 switch on the power supply to the controller.
+              Now, start the Totally Integrated Automation Portal by double clicking on it. (  TIA Portal V16)
+
+27
+              Select  Online&Diagnostics and then open the  Project view.
+
+              In the project navigation, select the previously set network card under  Online access. When
+                 you click  Update available devices, you will see the IP address (if already set) or the MAC
+                 address (if the IP address has not yet been assigned) for the connected SIMATIC S7-1500. Here,
+                 select  Online&Diagnostics.
+
+28
+              You will find  Assign IP address under  Functions. Here, enter the following IP address, for
+                 instance:  IP address: 192.168.0.1  Subnet mask 255.255.255.0. Now, click  Assign IP address
+                 and your SIMATIC S7-1500 will be assigned this new address.
+
+              The  Info  General window provides messages on the status of address assignment.
+
+29
+Open the program solutions for the Training Factory Industry 4.04.0
+Open the program solutions for the Training Factory Industry 4.04.0 using the following steps.
+
+              In the menu of the TIA portal, select  Project  Open and then  Search.
+
+              Then, click the compressed V16 project  LearningFactory_4_0_24V and select a target path on
+                 your computer to unpack the project there.
+
+  Note: The program solutions are available at:
+  https://github.com/fischertechnik/plc_training_factory_24v/tree/master
+  /PLC_SCL_sources
+
+30
+Adapting the hardware configuration
+The project is now open and will be displayed in the project navigation at left.
+If your hardware components differ from those in the program solutions, these components must be adjusted in
+the TIA portal.
+
+              To do so, first open the  Device configuration.
+
+              Mark one of the different components and then click  Exchange device.
+
+31
+              You will then see a dialogue where you can select from compatible devices.
+
+       You must select the correct BaseUnit for the signal modules:
+       - Use potential group for the left module (dark BaseUnit)
+       - Facilitate new potential group (light BaseUnit)
+
+           You can change these settings under  Properties  General  Potential group.
+
+32
+Load the control program to the CPU1512SP
+The following steps can be used to load the CPU 1512SP.
+
+              Before you continue, you should click the  Save project button to save your project.
+              To load your entire CPU, including hardware configuration and program solutions, to the device,
+
+                 mark the  PLC [CPU1512SP-1 PN] folder and click the  Load to device symbol.
+
+33
+                The Manager will open for configuring connection properties (expanded loading). First, select the correct
+                     interface. This involves three steps.
+                     - Type of PG/PC interface  PN/IE
+                     - PG/PC interface  here, for instance.: Intel(R) Ethernet Connection ...
+                     - Connection with interface/subnet  Directly to port ,1 X1`
+                     Then, activate the field  Display all compatible devices, and start the search for devices on the network
+                     by clicking the  Start search button.
+                     If your CPU is displayed in the list, select it and start loading.
+                     (Load  CPU 1512SP-1 PN)
+
+34
+                First, you will see a preview with information on the loading process, data security, etc... Continue with 
+                     loading.
+
+                Now, select the option  Start assembly before completing the loading process with  Complete.
+
+Finally, you can check online to ensure the configuration was loaded correctly. Then, set the time in the CPU if the
+set NTP server is not available for automatic time synchronisation.
+
+              Mark the CPU  PLC[CPU 1512SP-1 PN] and select  Connect online.
+35
+       Note: The symbol should be green here if there are no errors.
+              To set the time, open  Online & Diagnostics, then select  Set time under  Functions and then
+                  Accept, to adopt the time from your laptop/PC.
+
+36
+Commissioning and adjusting the SIMATIC controller
+CPU1516F with ET200SP on PROFINET IRT
+
+The next few pages show how to connect the programmable logic controller (PLC) SIMATIC S7-1500 to the CPU
+1516F-3 PN/DP and how to load the program solution for complete factory operation.
+This solution includes a decentralised connection of system signals to an ET200SP, which communicates with the
+CPU via PROFINET IRT (Isochrones Realtime). This section also describes commissioning of this ET200SP.
+This program solution is available as archive LearningFactory_4_0_24V_PROFINET_V02.zap16 for the TIA Portal
+V16, and is an alternative solution for the Training Factory Industry 4.04.0.
+However, the solution can also be adapted very easily. for example, it can be adapted to different configurations
+with different CPUs in the SIMATIC S7-1500 series, or with different ET200SP input/output modules.
+
+The assemblies used in the alternative solution are shown here:
+
+37
+The program solutions are available at:
+https://github.com/fischertechnik/plc_training_factory_24v/tree/master/PLC_SCL_sources
+Note:
+This section describes an example of commissioning for a SIEMENS SIMATIC S7-1500 controller with CPU 1516F-3 PN/DP.
+If a different controller is used, then other software tools must be used to create, and load the programs, and to
+operate the Training Factory Industry 4.04.0.
+The source codes can be imported to create the programs, depending on the controller used. These are available
+at:
+https://github.com/fischertechnik/plc_training_factory_24v/tree/master/PLC_SCL_sources
+
+Structure and operation of the CPU 1516F-3 PN/DP.
+
+Here is an overview of the elements of the CPU 1516F-3 PN/DP with bus adapter
+
+                LED indicators for the current operating status and diagnostic status of the CPU
+                Display
+                Operating buttons
+
+38
+Status and error indicators
+The CPU is equipped with the following LED indicators:
+
+                RUN/STOP LED (yellow/green LED)
+                ERROR-LED (red LED)
+                MAINT-LED (yellow LED)
+                LINK RX/TX-LED for Port X1 P1 (yellow/green LED)
+                LINK RX/TX-LED for port X1 P2 (yellow/green LED)
+                LINK RX/TX-LED for port X2 P1 (yellow/green LED)
+Operating and connection elements of the CPU 1516F-3 PN/DP behind the front flap
+
+                LED indicators for the current operating status and diagnostic status of the CPU
+                Display connection
+                Slot for the SIMATIC Memory Card
+                Operating mode switch
+                LED indicators for the 3 ports on the PROFINET interfaces X1 and X2
+                MAC addresses of the interfaces
+                PROFIBUS interface (X3)
+                PROFINET interface (X2) with 1 port
+                PROFINET interface (X1) with 2 ports
+                Connection for supply voltage
+                Attachment screws
+
+39
+Note: The front flap with display can be removed and inserted while operations are ongoing.
+The S7-1500 CPU has a front flap with a display and operating buttons. Controlling and status information can be
+shown on different menus on the display, and a wide variety of settings can be changed. Use the operating buttons
+to navigate through the menus.
+The CPU display offers the following functions:
+
+        You can select from 6 different display languages.
+        Diagnostic messages are shown in clear text.
+        Interface settings can be changed on site.
+        A password can be assigned to operate the display via the TIA portal.
+
+View of the display of an S7-1500:
+
+                CPU status information
+                Designation of the sub-menu
+                Display field for information
+                Navigation tool, e.g. OK/ESC or the page number
+
+SIMATIC Memory Card
+A SIMATIC Micro Memory Card is used as the storage module for the CPUs. It is a specially pre-formatted memory
+card which is compatible with the Windows file system.
+The MMC must be inserted to operate the CPU, since the CPUs do not have an integrated load memory for the
+programs. A common SD card reader is required to read/write the SIMATIC Memory Card with a laptop/PC. It can
+be used, for instance, to copy files directly to the SIMATIC Memory Card using Windows Explorer, or delete all
+program data.
+
+Note: We recommend only inserting or removing the SIMATIC Memory Card into/from the CPU when it is powered
+down.
+
+Operating mode switch
+
+The operating mode switch can be used to set the current CPU operating mode. The operating mode switch is a
+
+toggle switch with 3 settings:
+
+Setting Meaning                 Explanation
+
+RUN   RUN operating The CPU processes the user program
+STOP
+MRES  SmToOdPe operating The CPU processes the user program
+
+      Mmoedmeory reset          Setting to reset the CPU
+
+40
+Structure and operation of the SIMATIC ET 200SP
+
+The decentralised peripheral device SIMATIC ET 200SP is a modular, decentralised peripheral system for
+connecting the process signals to a central automation system like SIMATIC S7-1500.
+Decentralised peripheral devices are often used when signals need to be transmitted across a large distance, and
+when this requires a large amount of wiring work. This allows signals to be collected in a decentral manner on
+site and connected to the central controller via a bus system. The ET 200SP is connected via PROFINET IRT
+(Isochrones Realtime) for the solution program for the Training Factory Industry 4.04.0.
+The decentralised peripheral device ET 200SP is mounted on a standard profile rail  and is composed of an
+interface module  with bus adapter ,up to 32/64 peripheral modules inserted on BaseUnits ,   and a
+final server module.
+
+The decentralised peripheral devices provide inputs and outputs for on-site process connection that can be read
+and written by the central assembly via PROFINET. The I/O assemblies are queried normally in the S7 program via
+the input addresses (%I) and output addresses (%Q) are addressed.
+STEP 7 Professional programming software in the TIA portal
+The programming tool STEP 7 Professional is used to program and load the SPSen SIMATIC S7-1500 and
+commission the ET200SP.
+Program solutions for the Training Factory Industry 4.04.0 have been created with version V16 of STEP 7
+Professional in the TIA Portal.
+Further details on the programming software and PROFINET are provided in the SIEMENS handbooks at:
+http://support.automation.siemens.com.
+
+41
+Resetting the controller and setting the IP address
+
+Before you can load program solutions to the SIMATIC S7-1500, you should reset it to default settings and set the
+IP address of the CPU 1516F-3 PN/DP.
+The following steps can be used to reset the CPU 1516F-3 PN/DP to default settings.
+
+              First, switch off the power supply to the controller and then remove the SIMATIC Micro Memory
+                 Card inserted in the CPU 1516F-3 PN/DP.
+
+              To delete all program data from the SIMATIC Micro Memory Card in the CPU, you can simply insert
+                 the SIMATIC Memory Card into a common SD card reader and delete data on the card using
+                 Windows Explorer.
+
+              Then, insert the SIMATIC Memory Card back into the CPU 1516F-3 PN/DP and switch on the power supply
+
+                     to the controller.
+
+Note: We recommend only inserting or removing the SIMATIC Memory Card into/from the CPU when it is powered
+down. Otherwise, it may be damaged.
+Note: You should not format the SIMATIC Memory Card, just delete the data
+
+42
+To be able to program a SIMATIC S7-1500 controller from a laptop/PC from the CPU, you will need a TCP/IP
+connection.
+It is important for the IP addresses of the two devices to match, to ensure the computer and SIMATIC S7-1500 can
+communicate with one another via TCP/IP.
+First, we will show you how to set the IP address of a computer using a Windows 10 operating system.
+
+              Mark the network symbol below in the task bar and then click  Network settings.
+
+              In the network settings window that opens, click  Ethernet and then click  Change adapter
+                 options.
+
+43
+              Select the desired  LAN connection you want use to connect the controller, then click 
+                 Properties.
+
+              Now, select the  Properties for  internet protocol Version 4 (TCP/IPv4).
+
+44
+              Now you can use the following IP address, for instance  IP address: 192.168.0.99 and enter the
+                 following  subnet mask 255.255.255.0. Then accept the settings by pressing  OK.
+
+Now, you can assign the IP address to the CPU 1516F-3 PN/DP as shown in the following steps.
+              Connect Port 1 of the Ethernet interface [X1] on the CPU 1516F-3 PN/DP with Port 1 of the Ethernet
+                 interface on the ET200SP. Connect your laptop directly to Port 2 of the Ethernet interface [X1] on
+                 the CPU 1516F-3 PN/DP. Switch on the power supply to the controller. The other components of the
+                 Training Factory Industry 4.0can be connected to Port 2 of the Ethernet interface on the ET200SP.
+
+Note: A correct network topology is required here, since this topology was determined for PROFINET IRT
+communication in the project.
+
+              Now, start the Totally Integrated Automation Portal by double clicking on it. (  TIA Portal V16)
+
+45
+              Select  Online&Diagnostics and then open the  Project view.
+
+              In the project navigation, select the previously set network card under  Online access. When
+                 you click  Update available devices, you will see the IP address (if already set) or the MAC
+                 address (if the IP address has not yet been assigned) for the connected SIMATIC S7-1500. Here,
+                 select  Online&Diagnostics.
+
+46
+              You will find  Assign IP address under  Functions. Here, enter the following IP address, for
+                 instance:  IP address: 192.168.0.1  Subnet mask 255.255.255.0. Now, click  Assign IP address
+                 and your SIMATIC S7-1500 will be assigned this new address.
+
+              The  Info  General window provides messages on the status of address assignment.
+
+47
+Open the program solutions for the Training Factory Industry 4.04.0
+Open the program solutions for the Training Factory Industry 4.04.0 using the following steps.
+
+              In the menu of the TIA portal, select  Project  Open and then  Search.
+
+              Then, click the compressed V16 project  LearningFactory_4_0_24V_PROFINET and select a
+                 target path on your computer to unpack the project there.
+
+Note: The program solutions are available at:
+https://github.com/fischertechnik/plc_training_factory_24v/tree/master/PLC_SCL_sources
+
+48
+Adapting the hardware configuration
+The project is now open and will be displayed in the project navigation at left.
+If your hardware components differ from those in the program solutions, these components must be adjusted in
+the TIA portal.
+
+              To do so, first open the  Device configuration.
+
+49
+              Mark one of the different components and then click  Exchange device.
+              You will then see a dialogue where you can select from compatible devices.
+50
+              To see an overview of associated IP addresses in a project, click the  Display addresses symbol
+                 in the Network view.
+
+       You must select the correct BaseUnit for the signal modules of the ET200SP:
+       - Use potential group for the left module (dark BaseUnit)
+       - Facilitate new potential group (light BaseUnit)
+
+           You can change this setting in the  Device view of the ET200SP under  Properties
+                   General  Potential group.
+
+51
+Load the control program to the CPU 1516F-3 PN/DP
+The following steps can be used to load the CPU 1516F-3 PN/DP.
+
+              Before you continue, you should click the  Save project button to save your project.
+              To load your entire CPU, including hardware configuration and program solutions, to the device,
+
+                 mark the  PLC [CPU 1516F-3 PN/DP] folder and click the  Load to device symbol.
+
+              The Manager will open for configuring connection properties (expanded loading). First, select the
+                 correct interface. This involves three steps.
+                 - Type of PG/PC interface  PN/IE
+                 - PG/PC interface  here, for instance.: Intel(R) Ethernet Connection ...
+                 - Connection with interface/subnet  Directly to port ,1 X1`
+                 Then, activate the field  Display all compatible devices, and start the search for devices on the
+                 network by clicking the  Start search button.
+                 If your CPU is displayed in the list, select it and start loading.
+                 (Load  CPU 1516F-3 PN/DP)
+
+52
+              First, you will see a preview with information on the loading process, data security, etc... Continue
+                 with  loading.
+
+53
+              Now, select the option  Start assembly before completing the loading process with  Complete.
+
+Assign the device name for the PROFINET- IO- Device ET200SP
+The device name is used by the IO-Controller CPU 1516F-3 PN/DP to detect the IO-Device ET200SP and establish
+communication. Because of this, it must be assigned separately.
+Use the following steps to do so.
+
+              In the  Network view, mark the ET200SP with the device name  factory_PROFINET and select
+                  Assign device name.
+
+Note: The IP address set in the project is assigned later by the CPU 1516F-3 PN/DP controller when establishing
+the communication connection.
+54
+              Online access must be set correctly in the dialogue used to assign PROFINET device names. Then,
+                 you can select the device and filter by devices of the same type. If a new device is connected, the
+                 list must be updated. (  PROFINET device name: factory_profinet  Type of PG/PC interface:
+                 PN/IE  PG/PC interface: here: Intel(R) Ethernet Connection ...  Only display devices of the
+                 same kind  Update list). Determine the right device using the MAC address printed on the device
+                 before marking it, then click  Assign name to assign the device name.
+
+Finally, check online to ensure the configuration was loaded correctly and the PROFINET device was successfully
+connected by the controller. Then, set the time in the CPU if the set NTP server is not available for automatic time
+synchronisation.
+55
+              Mark the CPU  PLC[CPU 1516F-3 PN/DP] and select  Connect online.
+
+       Note: The symbol should be green here if there are no errors.
+              To set the time, open  Online & Diagnostics, then select  Set time under  Functions and then
+                  Accept, to adopt the time from your laptop/PC.
+
+56
+Connecting Training Factory Industry 4.04.0 to the Internet
+To connect Training Factory Industry 4.04.0 to the internet and thereby to the fischertechnik cloud, connect
+the nano Router TP-Link in WISP mode (Hotspot Router Mode) to a wireless WAN.
+Then, you can access the Dashboard of the fischertechnik cloud via mobile devices like a tablet,
+smartphone, laptop, or PC.
+
+Connecting the nano Router TP-Link (WR802N) in WISP mode
+The nano router TP-Link is connected to the IOT Gateway (Raspberry Pi) for power supply via USB. Alternatively,
+however, it can also be connected to the included plug-in power supply.
+The Ethernet cable of the nano Router TP-Link is connected directly to a free port on the PLC.
+
+                                              PLC                                 WiFi router)  Fischertechnik
+    IOT Gateway (Raspberry Pi)                                                                  Cloud
+
+                                                                                                             Internet
+
+                                                                             USB
+
+    Plug-in power supply
+    (included in delivery)
+
+                                                   alternativ
+                                                   e
+
+                                                            nano Router TP-Link (WR802N)
+                                                            Hotspot Router Mode
+                                                            WAN: WISP
+                                                            LAN1: 192.168.0.252
+
+57
+                                   The TP-Link must be configured to connect the nano Router TP-Link in WISP
+                                   mode (Hotspot Router Mode) to a wireless WAN.
+                                   Use your PC or a tablet to do so.
+Important: Unplug your computer's (WiFi capable) existing internet connection with the router. To do so,
+unplug the Ethernet LAN cable from the computer, and terminate any existing WiFi connection.
+The nano Router TP-Link is permanently installed in your system. You must first perform a reset before you
+integrate (configure) it into your working environment. Unplug the plug for the power supply on the TP-Link,
+then plug it back in so that it restarts. The green light will flash on the TP-link. Use a pointed object (small
+screwdriver) to press the reset button for 5 seconds. The lamp will go off. The TP-Link will restart. The lamp
+will flash again.
+
+                                                     Press the  Internet access button to open the
+                                                     Internet access context menu on your computer. A
+                                                     screen will appear showing the networks in your area.
+                                                     The TP-Link should appear in the list. Click on WiFi
+                                                     once and then WiFi once again if it doesn't. This will
+                                                     restart the WiFi, and another search will be completed
+                                                     for all WiFi networks.
+
+58
+                                                       In the next step, activate the displayed TP-link. An additional
+                                                       context menu will appear. Select theConnect button.
+
+                                                       After a short while, a pop-up window will appear asking you
+                                                       to enter the network security key for your TP-link.
+                                                    This can be found on the bottom of the TP-link.
+
+After entering the key, confirm by pressing the Next button.
+The next step is to check the security key and the TP-link is now
+connected to your computer via WiFi.
+The last pop-up window will show you that the connection is
+successful.
+
+59
+Next, you need to configure the TP-link for your network. To do
+this, open a WEB browser (Firefox or Chrome).
+Access the page http://tplinkwifi.net Important note: Do not enter www. before the address
+and go to this page. The following page will appear:
+
+Enter "admin" as the user name and "admin" as the password, and confirm by pressing "Log In".
+Confirm this page with setup information by pressing  Next.
+
+60
+The password should not be changed, otherwise it has to be changed on the TXT Controller. Confirm by
+pressing  Next
+
+Then, select  Operation Mode  WISP and confirm the selection with  Next.
+
+61
+For the  WAN Connection Type, select  Dynamic IP and confirm the selection with  Next.
+
+Next, the  AP List will appear with nearby available WiFi Access Points (APs). Select your WiFi access point by
+clicking  Connect
+
+62
+Adopt the  Client Settings and  AP Settings with  Next.
+Note: The AP Settings should not be changed; otherwise the settings of the TXT controller will have to be adjusted.
+You can take the Client Settings and Wireless Password from the configuration pages for your WiFi access point,
+or request them from your network administrator.
+
+                                                                                                                Wireless password for
+                                                                                                                the WiFi access point
+
+Then you will see an overview of settings. Adopt them by clicking  Finish.
+
+63
+Confirm the following message by clicking  OK.
+                         The settings will be saved, and the system will restart (rebooting).
+
+                            The status display shows the progress of the reboot.
+                                                   Important note: It is possible that the connection from the
+                                                   computer to the TP-link will be interrupted during the reboot.
+                                                   Connect them by clicking Connect.
+
+64
+The status screen will open once the reboot is done. You can read different values for the status of the LAN and
+WiFi connection here.
+
+65
+Then, set the IP address of the nano Router on LAN and for DHCP.
+To do so, select  Network in the menu at left and then  LAN. Assign the TP-Link the
+ IP address 192.168.0.252 with the  Subnet Mask 255.255.255.0.
+
+Then, activate  DHCP by clicking  Enable and change the settings displayed here for the IP addresses. Accept
+these settings with  Save.
+
+66
+Once the TXT controller is switched on, it will be displayed in the  DHCP Clients List with its MAC and IP address. If
+it is not, turn on the TXT controller, wait until it has started up, and then update the view by clicking  Refresh.
+
+The TXT controller should have a fixed IP address of 192.168.0.10. In the  Address Reservation menu, this address
+can be re-assigned under  Edit and then adopted by clicking  Save.
+
+Now, you can unplug the WiFi connection to the nano Router TP link.
+67
+Training Factory Industry 4.0dashboard in the fischertechnik
+cloud
+
+                     The dashboard can be accessed and operated via mobile devices such as tablets and
+                     smartphones as well as laptops and PCs. It enables factory scenarios to be displayed
+                     from three different perspectives:
+
+                                 Customer view
+
+                                 Supplier view
+
+                                 Production view
+
+User login
+
+                     You have to log in before you can use the dashboard.
+                     To log in, call up
+                     www.fischertechnik-cloud.com
+                     . The two best Internet browsers to use are "Firefox" or "Google Chrome".
+                     Enter the address (URL). It will now appear on the following screen.
+
+                     Important: If this page doesn't load, press "CTRL + F5" at the same time to reload the
+                     page. This is a general browser problem.
+
+68
+Click "here" to log in for the first time:
+Are you new to fischertechnik? Sign up now...
+Fill out all fields and accept the data privacy policies. Check the box,
+"I am not a robot" and answer the questions.
+Confirm log-in by clicking:
+
+After signing up, you will be able to log in using your user name and
+password. As soon as you have done this, the dashboard will start
+up. After carrying out the next item, the dashboard will populate with
+data.
+
+Cloud connection
+
+Only one TXT controller will link from the Training Factory Industry 4.04.0 to the
+cloud, which also controls the movable camera. The WiFi connection to the
+nano Router TP-link is a default setting.
+The following settings are required for this TXT to connect
+to the fischertechnik cloud:
+On the TXT, activate the "Settings ­ Properties
+- Cloud Client". Now click on the "Home" button to return to the "Home"
+screen.
+
+                                  Now connect the TXT controller to the fischertechnik
+                                  cloud using "Settings ­ Network ­ Cloud Settings ­
+                                  Pairing New".
+
+69
+                                   If the TXT controller is able to connect to the cloud, then a QR-code and
+                                   pairing code will display. You now have 30 minutes to add your TXT controller
+                                   to your account in the cloud. If this period of time elapses before you have
+                                   done this, you will have to start all over with the pairing process.
+                                   You can scan the QR code, e.g., by using the "Quick Scan" app, whereupon you
+                                   will be automatically directed to the fischertechnik cloud.
+
+                                                                            Alternatively, you can go to the
+                                                                            fischertechnik cloud page to "Settings -
+                                                                            Add controller" and manually enter the
+                                                                            pairing code there.
+                                       At this point enter any name you wish for the
+                                       TXT controller, e.g., its ID, "TXT-7133".
+
+                                 Now the TXT controller is connected to the cloud.
+                                 Under "File - Cloud", load the application
+                                 TxtGatewayPLC to the TXT Controller.
+
+                                 As soon as you have connected to the cloud, start
+                                 the applications on the TXT controller.
+
+70
+Factory dashboard
+
+This will display with the following screen:
+
+You can change the sequence of the individual screens to adjust your
+requirements.
+Click this button to close or expand the main menu for the cloud.
+
+71
+The individual windows and their functions at a glance:
+Order raw material
+The "Order raw material" view: The view
+indicates which raw material is missing and needs
+to be reordered.
+
+Inventory
+You can see how many raw materials were stored
+in the high-bay warehouse in the "Inventory"
+window. The stock is changed according to the
+number and colour if goods are removed.
+
+Order
+This window shows how much raw material (blue,
+red, white) is in the warehouse. If, for example, a
+red workpiece is placed on the shelf, the colour
+display and stock value changes.
+
+72
+Factory status
+The current working status of the overall
+factory is displayed in the "Factory status"
+window. "Icon is highlighted in blue" will
+be displayed if, for example, the vacuum
+suction gripper is currently being used.
+
+Production status
+In this window, you see the blueprint of the production
+process right after you have ordered a workpiece. This
+allows you to keep track of where the workpiece
+currently is in the factory.
+
+The NFC reader
+This window always displays the NFC reader's
+current status.
+But you can also hang a workpiece and read out the
+data of the NFC tag.
+Click "Delete" to delete the contents on the NFC tag.
+
+73
+Dashboard camera
+
+                     Camera
+                     The "Camera" screen displays the camera
+                     section of your factory.
+
+                     This corresponds to a live recording of the
+                     factory.
+
+                     Camera control
+
+                     This screen gives you the power to control your
+                     camera live. You can thus get an overview of
+                     the entire factory.
+
+                                 Control the camera
+                                 with the virtual joystick. The red dot indicates where the centre of the camera
+                                 is. Use the "Step size" button to set the degree by which the camera rotates
+                                 when the arrow is clicked. The two red buttons can be used to centre or stop
+                                 the camera.
+
+                                 Take a snapshot
+                                 The "Snapshot for the Current Image" button lets you place the current image
+                                 in the Gallery screen.
+
+                                 Gallery
+                                 All the images you have created are
+                                 saved in the "Gallery" window. Use the
+                                 arrow keys to scroll through the gallery.
+                                 The current picture is displayed zoomed.
+                                 Click "Delete" to remove an image from
+                                 the gallery.
+                                  Use the command "Download" to store the image for further use. Specify a storage
+                                  location in the context menu that opens.
+
+74
+Dashboard Environmental Station
+
+  In addition to the camera function, you can view and process the information
+  from the environmental sensor.
+  Current air quality
+
+                                                      The "Current air quality" window lets you see a value of the
+                                                      air quality, which is indicated by the three rectangles. The
+                                                      displays will be switched on depending on the quality of the
+                                                      air when it is measured. Green means that the air quality is
+                                                      very good; green and yellow indicate that it is good; yellow
+                                                      means satisfactory; yellow and red signify that the air quality
+                                                      is adequate and red means that the air quality is bad.
+
+  The "More" button (this applies to all
+  environmental sensor windows) let's
+  you choose between "Graph",
+  "Single value" and "Download".
+
+  You will get a graphical representation of the measured values if you select "Graph". Use the scroll
+  bar to scroll through all recorded data.
+
+                                              If you select "Download", the data will be downloaded as a .csv file
+                                              and can be downloaded and displayed in OpenOffice Calc or Excel.
+                                              The data can then be further processed.
+
+  Current brightness
+ The "Current brightness" window displays a
+ brightness value in %, as well as the time at which the
+ measured value was taken. Also visible are the
+ brightness variations.
+
+75
+    Current air pressure
+
+                                              The "Current air pressure" window displays
+                                              the air pressure in hPa (Hecto-Pascal) and
+                                              the time at which the measured value was
+                                              generated.
+
+    Current humidity
+
+    The "Current humidity" window displays a
+    value for relative humidity as a %.
+
+                                                    Current temperature
+                                                    The "Current temperature" window displays
+                                                    the current temperature (ambient
+                                                    temperature) of the measuring sensor in ° C.
+
+    Other buttons
+    Use the "Add window" button to add a hidden window. If you
+    activate the button, a context menu appears from which you can
+    show a dashboard window.
+
+    Use this button to shoot the current window.
+
+    Use this button to zoom the current window to full screen mode.
+
+76
+This button shows and hides the left status bar.
+The button shows which profile you are logged in under. Clicking on
+the arrow will bring up a context menu. Here, you can select
+"Profiles" or "Logout". Selecting "Profiles" will open another context
+menu in which you can set settings for your profile. Click "Logout" to
+log out of the fischertechnik cloud.
+A context menu for selecting the language will display if you activate the arrow
+that comes after "DE".
+The status bar shows three selections that you can activate by clicking on them.
+The first two buttons let you choose whether you want to work with the factory
+simulation dashboard or just the environmental station dashboard.
+Activating the "Settings" button will display a context menu where you can view
+and change various parameters relating to your TXT controller.
+
+77
+Operating the factory with the fischertechnik cloud
+                                       To start factory operation, first load the PLC
+                                       program and then set CPU1512SP to RUN.
+
+   This is described in the section Commissioning and adapting the SIMATIC controller CPU1512SP.
+   Then start the application on the TXT controller as described here:
+
+                          When the TXT controller is switched on, the
+                          program is loaded automatically by "Auto Load,"
+                          and just needs to be started by pressing "Start
+                          Program" on the touch display.
+
+                          The following application will run on the
+                          TXT Controller:
+                          "TxtGatewayPLC"
+
+                                                         This application is on the TXT Controller under:
+                                                         File - Cloud
+
+    Control at end: The program on the TXT Controller must run. This is recognizable
+    by the red symbol on the controller display.
+
+    Then the IOT gateway should be restarted. Do so using the "fischertechnik Node RED Dashboard". In
+
+    the "HMI ­ Main" view, click  in the "Factory Control via OPCUA" window to easily switch the
+    power supply on and off.
+
+Once the programs on the PLC, the IOT gateway and the TXT Controller are started, the Training Factory Industry
+4.04.0 will be ready for operation.
+
+78
+  You will learn to operate the factory and the dashboard by carrying out the
+  following tasks.
+
+    Task 1
+    Before raw material can be stored in the high-bay warehouse, the
+    compartments must be equipped with the supplied empty containers. This is
+    the first task you need to perform as a warehouseman.
+
+9x
+
+    Your dashboard looks like this:
+
+    Purchase order                   Raw materials order  Inventory
+    Blue, red, white not             No order placed      Inventory empty, since no raw
+    available, stock 0                                    materials were stored
+
+    Important note: If this is not the case, you can use
+    the included key fob (with integrated NFC tag) to reset
+    the dashboard windows to their default settings.
+    Alternatively, you can also use the Node-RED
+    dashboard
+
+79
+Task 2
+Order raw material that should be stored in the high-bay warehouse as
+stock. To do this, manually store the raw material in the input station.
+First, only store a white stone as a workpiece.
+
+                                                      Enter a white stone in the material input.
+                                                      The workpiece (raw material) interrupts
+                                                      the photoelectric barrier. This process is
+                                                      identified as "Inbound Delivery" and
+                                                      highlighted in green in the "Production
+                                                      Process" dashboard window with the
+                                                      "Delivery" icon.
+                                 Then the vacuum suction gripper moves to the storage position, picks up the raw
+                                 material and moves it to the NFC reader.
+                                 The dashboard window displays the
+                                 process as follows:
+                                 Delivery and vacuum suction grippers
+                                 are active and are displayed in green.
+
+                                 At this point, all data is deleted that is located on the NFC tag for the raw
+                                 material (already described).
+
+80
+                         The raw material colour is determined in the next step. To
+                         do this, the vacuum suction gripper moves the raw material
+                         over the colour sensor. The data is then available to the
+                         NFC reader for further processing. Before the raw material
+                         is stored, the determined colour data and further
+ information such as delivery data and quality controlling data are written on
+ the NFC tag using the NFC reader. Since both factory modules (delivery and
+ vacuum pads) are still active, this will continue to be displayed in green on the
+ production process dashboard.
+
+                                          This data is displayed in the "NFC Reader" dashboard window.
+
+ What happens next?
+                                  The high-bay warehouse provides an empty
+                                  container to hold the raw materials. For the raw
+                                  material to be placed in the empty container, the
+                                  gripper arm moves into the position for an empty
+                                  container, picks it up with its slider and deposits it
+                                  on the input/output device.
+
+  The container is transported via container to the input position.
+                             The vacuum suction arm rotates to the discharge
+                             position, moves down and places the raw material
+                             into the waiting container.
+
+                            The input/output device then transports the container
+                            with the raw material to the high-bay warehouse
+                            gripper arm's receiving position. At this point, the
+                            container is picked up, transported to the storage
+                            location in the high bay and stored there.
+
+81
+The "Production process" dashboard window shows the next
+steps in the storage process. The icons for all active factory
+modules light up in green when the factory modules are in
+action.
+
+Look at the following dashboard window - TXT: Order raw material, TXT: Inventory and TXT: Order.
+TXT: Order raw material
+There are 3 workpieces available for ordering raw materials.
+The maximum number of white stones will be reduced by one in the
+"TXT: order raw materials" dashboard
+window. After you have done this, you will still have two workpieces
+available for storing.
+TXT: Inventory
+You will now see a white stone displayed in the storage system in the
+"TXT: Inventory status" dashboard window This means that you can
+order this workpiece as a customer and have it processed.
+
+TXT: Purchase order
+The dashboard window "TXT: Order" will now be displayed, showing
+that there is a white stone in the warehouse and it can be ordered.
+
+82
+ Task 3
+ Order raw material that is to be stored in the high-bay warehouse as stock.
+ To do this, manually store the raw material in the input station.
+ Now store a blue stone as a workpiece.
+As described in Task 2, insert a blue stone in the high-bay warehouse. The
+dashboard will display the results once the foot-away work has been
+accomplished.
+
+   Task 4
+   Store additional raw materials for storage in the high-bay warehouse. You
+   still need two white and one red workpieces.
+
+83
+Task 5
+Put yourself in the position of a customer, who, for example, would like to
+order a white workpiece. Order a white workpiece.
+
+                                          To do this, click on the blue "Purchase order" button in the "TXT: PO"
+                                          dashboard window.
+
+                              This happens at the factory: The transport arm of the high-
+                              bay warehouse moves into the "white workpiece" insert
+                              position.
+                              The transport arm picks this up and put it in the high-bay
+                              warehouse's in-/output station. From there, it is
+                              transported to the receiving position on the vacuum
+                              suction gripper.
+
+                              The vacuum suction gripper picks up the workpiece at the
+                              picking position and places it on the slider in the kiln.
+
+                              The workpiece is inserted, fired and moved out of the oven
+                              again.
+                              The available small transport carriage with vacuum
+                              suction takes over the transport to the processing
+                              machine referred to as the "milling machine".
+                              The transport carriage with vacuum suction places
+                              the part on the turntable, which then turns it to the
+                              milling machine. After the milling process has been
+                              carried out, the workpiece is rotated another 90
+                              degrees and pneumatically pushed onto a conveyor
+                              belt.
+
+84
+                              On the way to the sorting device, the workpiece
+                              undergoes colour detection.
+
+                              Depending on the detected colour, the workpiece is
+                              pushed pneumatically from the conveyor belt on a
+                              material chute. The workpiece is located in a
+                              receiving area and can be transported from here
+                              using the vacuum suction gripper.
+
+                                 The gripper places the workpiece on the NFC reader for
+                                 the final inscription. There it is loaded with workpiece-
+                                 related data such as the order date, manufacturing or
+                                 delivery data.
+
+                              Finally, the workpiece is placed in the output tray at
+                              the input-output station.
+
+You can also follow the steps on the dashboard:
+
+Raw material is taken from the high-bay warehouse and fed to the processing
+process.
+
+Raw material is processed in the multi-processing station (kiln, milling
+machine).
+A machined workpiece is sorted by colour and the NFC reader provides it with
+workpiece-relevant data.
+The workpiece is ready for delivery and can be removed from the system.
+
+85
+Task 6
+A white stone has accidentally fallen off the high bay and you want to know
+what data was written on the NFC tag.
+The system must be at rest to do this. Place the workpiece on the NFC
+reader and activate the "Read NFC" button in the "TXT: NFC Reader"
+dashboard window.
+
+The NFC reader reads the data and displays it in the
+dashboard window.
+If necessary, you can delete the data using the "Delete NFC"
+button.
+
+86
+Task 7
+Evaluate data from your environmental station. To do this, first show the data
+in the graph area of the dashboard view. Save the data as a
+.csv file and use it in a spreadsheet program.
+Determine data on
+brightness of the environment in
+your factory.
+
++
+Determine current temperature data for your factory and edit in
+a spreadsheet program.
+
+Determine the humidity values over a longer period of time and
+have them displayed graphically on the dashboard.
+
+87
+Task 8
+Use the built-in camera to monitor your factory. Move the camera around your
+factory and take 2 pictures of the factory. Save an image for documentation.
+Delete unnecessary pictures from the gallery.
+
+To move the camera, use the "TXT:
+Camera control" dashboard window.
+The buttons used for this task have already been explained
+previously in the description of the dashboard.
+Move the camera around your factory. Move the vertical and
+horizontal axes of your camera using the "blue arrow buttons".
+The factory section that the camera is currently recording is also
+displayed in the "TXT: Camera" dashboard window.
+
+Select three pictures and save them in the "TXT: Gallery"
+dashboard window. Use the "Take snapshot for the current
+image" button.
+Select 1 picture from the gallery, one that you would like to further
+process in an image editing program. To do this, click on the
+"Download" button
+. A context menu appears in which you specify the storage
+location and the file name.
+Click the "Delete" button to delete unwanted pictures.
+
+88
+    Training Factory Industry 4.0fischertechnik Node-RED dashboard
+    The fischertechnik Node-RED dashboard is designed to be a local HMI operating interface (Human
+    Machine Interface) in a local network (LAN). It can be started easily in a web browser (recommended:
+    Firefox or Chrome) by entering:
+
+    192.168.0.5:1880/ui
+
+    (IP address of the IoT gateway: Port 1880 / ui as the name of the application)
+
+    The following views are available here:
+    HMI ­ Main
+    The camera image and the workpieces stored in the high-bay warehouse are displayed in this menu.
+
+    In the "Factory Control via OPCUA" window, you can click  to reset assignment of the high-bay
+    warehouse.
+
+    Click  to acknowledge errors in the Training Factory Industry 4.04.0.
+
+    Click  to restart the IOT gateway. This is required when the PLC program has been restarted.
+
+89
+   HMI ­ HBW Positions
+   The positions of the stacker crane in the automated high-bay warehouse station (HBW) can be calibrated
+   and monitored in this menu.
+
+   HMI ­ VGR Positions
+   The positions of the 3-axis robot in the vacuum suction gripper (VGR) station can be calibrated and
+   monitored in this menu.
+
+90
+   HMI ­ SSC Positions
+   The positions of the camera in the sensor station with camera (SSC) can be calibrated and monitored in
+   this menu.
+
+   HMI - Calibration
+   The colour sensors in the sensor station with camera (SSC) and the colour sensor and positions on the
+   sorting line with colour detection (SLD) can be calibrated in this menu.
+
+91
+    HMI ­ Config Data
+
+    After calibrating the colour sensors and positions, the data in the "Save Data" window from the PLC can
+
+    be stored in a *.csv file  in this menu.
+
+    The calibration data from a *.csv file can be loaded  to the PLC in the "Load Data" window.
+
+    ft Cloud
+    The fischertechnik cloud can be accessed in this menu. There must be an internet connection to do so.
+
+92
+   Training Factory Industry 4.04.0 ­ Overview
+   The camera image and the sensor data are displayed in this menu.
+   In addition, a camera controller is available in the "Camera Control" window.
+   An order for a white, red, or blue workpiece can be executed in the "Order" window.
+   Errors can be acknowledged and commands to delete, read and write NFC tags can be executed in the
+   "Factory Control" window.
+
+   Training Factory Industry 4.04.0 ­ Graph
+   Graphs for environmental data can be accessed in different windows in this menu.
+
+93
+    Calibrating the system in the Training Factory Industry 4.0fischertechnik Node-RED Dashboard
+
+    If positions in the individual factory modules are no longer correct, or if the colour sensors need to be
+    recalibrated, this can be completed in the fischertechnik Node-RED dashboard of the Learning Factory.
+
+    Calibrating the colour sensors:
+
+    The colour sensors are calibrated in the "Colour sensor calibration" window in the dashboard under
+    "HMI - Calibration".
+
+                                     The process is started by activating "Calibrate colour
+                                     sensor" and selecting the relevant colour sensor.
+                                     Here, for example, this is "DSI".
+
+                                     - DSI stands for the colour sensor on the input / output
+                                     station
+
+                                     - SLD stands for the colour sensor on the sorting station
+
+                                     First, place the white workpiece in the centre of the
+
+                                     sensor and confirm the value by clicking  , then
+
+                                     place the red workpiece and confirm by clicking
+
+                                     and finally place the blue workpiece and
+
+                                     confirm by clicking  .
+
+                                     Finally, click          to calculate threshold
+                                     values.
+
+                                     Note: At the end, do not forget to deactivate "Calibrate
+                                     colour sensor" .
+
+    Calibration of colour sensors in the sorting station (SLD) is completed in the same way, although in this
+    case each workpiece is placed on the start of the belt for measurement. The conveyor belt then
+    transports the workpiece past the colour sensor to the light barrier behind the colour sensor.
+
+94
+    Calibrating positions on the sorting line with colour detection (SLD):
+
+    The positions to push out the workpieces in the sorting line with colour detection (SLD) are calibrated in
+    the "SLD push out counter" window in the dashboard under "HMI - calibration".
+
+                                                                    The process is started by activating "Calibrate
+                                                                    push out" .
+
+                                                                    Then, first test whether the current positions are
+                                                                    correct for all 3 colours (white/red/blue).
+
+                                                                    Do so by placing the workpieces on the start of the
+                                                                    conveyor belt. The conveyor belt will then
+                                                                    transport the workpiece past the colour sensor to
+                                                                    the set positions on the relevant ejection point. The
+                                                                    part is ejected there.
+
+    If the position is not correct, it can be corrected and adopted by clicking  . Then the test
+
+    should be completed again. Repeat this process as long as necessary for all 3 colours
+
+    (white/red/blue) until the positions are correct.
+
+    Note: At the end, do not forget to deactivate "Calibrate push out" .
+
+95
+    Calibrating a position on the sensor station with camera (SSC):
+
+    The camera positions in the sensor station with camera (SSC) are calibrated in the windows "move to
+    position", "Position Centre" and "Position HBW" in the dashboard under "HMI - SSC Positions".
+
+                                                               The process is started by activating
+                                                               "Activate pos. move" .
+
+                                                               Then, one of the two positions "Centre"
+                                                               (central position looking toward the vacuum
+                                                               suction gripper) or "HBW" as shown here
+                                                               (position with view of the high-bay
+                                                               warehouse) can be selected.
+
+           Clicking                                  will cause the camera to
+
+           move first to the reference position (0/0) and
+
+           then to the position "HBW".
+
+           Test both positions.
+
+    If one of the positions is not correct, it can be corrected in the "Position Centre" or "Position HBW"
+    windows. Then the test should be completed again.
+
+    Repeat this process until all positions are correct.
+
+    Click  to move to the reference position (0/0).
+
+    Note: At the end, do not forget to deactivate "Activate pos. move" .
+
+96
+    Calibrating a position for the vacuum suction gripper (VGR):
+
+    The positions of the 3-axis robot in the vacuum suction gripper station (VGR) are calibrated in the
+    dashboard under "HMI - VGR Positions". Here, there are the window "move to position" and 13 windows
+    for the positions
+
+    "Position Colour Reader", "Position DSI
+    collect", "Position DSI discard",
+    "Position DSO collect", "Position DSO
+    discard", "Position HBW collect",
+    "Position HBW discard", "Position
+    MPO", "Position NFC", "Position NOK",
+    "Position SLD white", "Position SLD red"
+    and "Position SLD blue".
+
+    The process is started by activating "Activate
+    pos. move" .
+
+    Then one of the positions, for example position
+    "DSO discard" can be selected.
+
+    Click       to cause the 3-axis robot to
+
+    move first to the reference position (0/0/0) and
+
+    then to a position above (offset by the value
+
+    Offset) the position "DSO discard".
+
+    Click       and it will move to the final
+
+    position, then back to the reference position
+
+    (0/0/0).
+
+    The button  is non-functional here.
+
+    Test all 13 positions in this way.
+
+97
+                                                       If one of the positions is not correct,
+                                                       it can be corrected in the position
+                                                       windows, here for example "Position
+                                                       DSO". Then the test should be
+                                                       completed again.
+
+                                                       Repeat this process until all positions
+                                                       are correct.
+
+    Click  to move to the reference position (0/0/0).
+
+    Note: At the end, do not forget to deactivate "Activate pos. move" .
+
+    Calibrating a position for the automated high-bay warehouse (HBW):
+    The positions of the stacker crane in the automated high-bay warehouse station (HBW)
+    are calibrated in the dashboard under "HMI - HBW Positions". Here, there are the
+    window "move to position" and 5 windows for the positions
+    "Position Belt",
+    "Position Rack"
+    with the offset for the rack,
+    "Position Rack Row A",
+    "Position Rack Row B",
+    and
+    "Position Rack Row C",
+
+    Only the positions Rack A1, Rack B2 and Rack C3 are approached and calibrated in the warehouse.
+    The other 6 position values are calculated on this basis.
+
+98
+           The process is started by activating "Activate pos.
+           move" .
+
+           Then one of the positions, for example position "Rack
+           B2" (position B2 in the warehouse) can be selected.
+
+           Clicking               will cause the stacker crane to
+
+           move first to the reference position (0/0/Cantilever rear)
+
+           and then to the position "Rack B2" before the
+
+           warehouse.
+
+           Click       to move the cantilever into the
+           warehouse.
+
+           Click       to move the stacker crane up by the
+
+           value offset to lift a pallet.
+
+           Click       once again to move the stacker crane
+
+           back down by the value offset, then move the cantilever
+
+           in and finally back to the reference position
+
+           (0/0/Cantilever rear)
+
+    Test all 3 positions in the warehouse (A1, B2, C3) and the positions on the belt.
+
+                       If one of the positions is not correct, this
+                       can be corrected in the position windows,
+                       here for example"Position Rack Row B"
+                       (Position Rack B2). Then the test should
+                       be completed again.
+
+                       Repeat this process until all positions are
+                       correct.
+
+    Click  to move to the reference position (0/0/Cantilever rear).
+
+    Note: At the end, do not forget to deactivate "Activate pos. move" .
+
+99
+ Components description
+
+  The most important components of the factory modules are described on the following pages.
+
+  Actuators
+
+  Both encoder motors and fischertechnik-specific mini motors are installed in
+  the individual stations.
+  Encoder motor:
+  The encoder motors are permanently energised DC motors. The encoder
+  motors used here can be used to determine paths with a quadrature
+  encoder (signal A, B).
+  The encoder motors operate at a nominal voltage of 24 VDC and have a
+  maximum power of 0.9 W and at a maximum speed of 200 RPMs. Power
+  consumption at maximum power is 180 mA.
+  The encoders generate 3 pulses per rotation of the motor shaft. The
+  integrated transmission has a ration of 20.4:1. Therefore, one rotation of
+  the shaft coming out of the transmission corresponds to 61.2 pulses of
+  the encoder.
+  A four-wire cable is used to connect the encoder.
+
+100
+Mini motor
+
+If conveyor belts or processing machines are used in the individual stations,
+they are driven by a mini-motor. This compact motor is a permanently
+energised DC motor that can be used in conjunction with a plug-in U
+transmission
+. The motor's rated voltage is 24 V and the current consumption is a maximum
+of 400 mA. The motor has a maximum torque of 6.92 mNm and an idling speed
+of 10,910 RPMs. The U-transmission has a ratio of 64.8: 1 and a lateral output.
+
+Compressor:
+
+A diaphragm pump is used if a compressed air source is required at the
+stations.
+
+Such a diaphragm pump consists of two chambers, which are separated by           Crankshaft
+a membrane (see Figure 1). In one of these two chambers, a piston is moved
+back and forth by an eccentric, which reduces or increases the volume in
+the other chamber. When the piston moves to the right, the diaphragm is
+pulled back, sucking air into the second chamber via the inlet valve. If the
+piston moves to the left,
+the diaphragm pushes the air out of the pump head via the outlet valve. The
+compressor here uses a rated voltage of 24 VDC and generates an
+overpressure of 0.7 bar. The compressor's maximum current consumption is
+36 mA.
+
+                               Piston
+                                        A/exhaust valve
+
+             Cover  Diaphragm                                                    Figure 1
+
+101
+3/2-way solenoid valve:
+3/2-way solenoid valves are used to control the pneumatic cylinders. These
+switching valves have three connections and two switching states. A coil (a)
+that works against a spring (c) carries out the switching operations. When a
+voltage is applied to the coil, the coil's mounted core (b), which is mounted so
+that it can slide, moves against the spring and thereby opens the valve due to
+the Lorentz force.
+In this case, opening means that the compressed air
+connection (current designation: 1, old name: P) is connected
+to the cylinder port (2, formerly A). If this voltage drops, the
+spring pushes the core back and closes the valve again. In
+this position, the cylinder port (2, formerly A) is connected to
+the vent (3, formerly R). The figure shows a schematic
+representation of the 3/2-way solenoid valve.
+
+102
+Pneumatic cylinders:
+The factory has a total of 5 single-acting cylinders with spring installed. These are
+controlled by the 3/2-way solenoid valves. A piston divides the volume of the
+cylinder into two chambers on pneumatic cylinders. A pressure difference
+between these two chambers results in a force that acts on the piston, thereby
+displacing it. This shift corresponds to a volume change in both chambers.
+Installing a return spring saves on a second air connection with 3/2-way valve.
+When the 3/2-way solenoid valve is opened, the air produced in the compressor
+flows to port 1 on the cylinder and pushes the piston forward against the spring
+force. To do this, the piston rod extends forwards. When the solenoid valve closes
+the air supply, the spring pushes the piston back to the initial position.
+
+Vacuum cups:
+
+The suction function on the vacuum suction device is achieved by using two
+pneumatic cylinders which are controlled by means of a 3/2-way solenoid valve.
+In order to generate a negative pressure, i.e., a pressure which is lower than the
+ambient pressure, two cylinders are mechanically coupled in the vacuum gripper.
+If a cylinder is then subjected to overpressure, both piston rods extend, resulting
+in an increase in volume in the chamber that the vacuum closes. This increase in
+volume causes a pressure drop in this chamber.
+
+Mini-button:
+
+Mini-pushbuttons are used as reference switches. They are used for position
+determination using a point-to-point movement, for example, at the turntable. The
+miniature pushbutton used here is equipped with a changeover contact and can
+be used both as a normally closed contact and as a make contact.
+Pressing the button creates a conductive connection between
+contact 1 and contact 3, whereas the connection between contact 1
+and contact 2 is disconnected. The figure shows the schematic circuit
+diagram of the mini-pushbutton.
+
+103
+LED
+An LED is an electronic component which converts electrical energy into light. The abbreviation LED stems
+from the English "Light Emitting Diode".
+LED for creating light in a light barrier and as a lamp
+This LED's light frequency controls a photo-resistor. The "+" and "L" identify the module.
+Another feature is the vitreous body. It bundles rays, so that the light beams hit the photo-
+transistor in parallel to one another, and not scattered.
+
+Sensors
+
+Photo-transistor
+Photo-transistors are electronic components that react to light. Photo-transistors
+usually only have two connections, the collector and the emitter. The base is replaced
+by the incident light. Light from the LED that hits the photo-transistor switches the
+current flow. This behaviour can be evaluated using program technology.
+
+Photo-resistor
+A photo-resistor is an electronic component whose electrical resistance changes when
+light strikes it. In many descriptions you will also find the name LDR. This term comes from
+the English word, "light-dependent resistor".
+Important: The photo-resistor has a resistance value of
+0 - >1MOhm (in complete darkness). The TXT Controller software lets you read a maximum value of 15,000
+sensors
+
+104
+Environment sensor
+                         The sensor, which is located on a
+                         circuit board in the housing, is used
+                         to measure gas, air pressure,
+                         humidity and air temperature. The
+                         component is
+
+  connected to the TXT controller via a ribbon cable.
+
+  The data is continuously measured and stored in a CSV file that can be opened in Excel, for example. The
+  values can be viewed in the fischertechnik cloud.
+  These images show a part of the dashboard of the environmental station.
+
+Colour sensor
+Colour sensors are used in the automation technology to check the colour or
+a colour print. For example, this is done to ensure that the correct components
+were installed. The fischertechnik colour sensor emits white light, which
+different colour surfaces reflect to different degrees. The photo-transistor is
+used to measure the intensity of reflected light and
+a voltage value between 0 V and 9 V is output. The measured value depends on
+the ambient brightness as well as the distance of the sensor from the coloured
+surface. The connection is made via three cables. The red cable is attached to a
+9V output (generated from 24V), the green cable is connected to ground, and the
+black cable for the measured value is connected to a 0-10V analogue input on the
+PLC. This measured value (0-9 V) is digitised into a whole number between 0 and
+24883.
+
+105
+NFC-Tags NTAG213 22mm
+
+Each workpiece has its own unique ID and displays the following data: Status,
+colour and time stamp from delivery to dispatch. This information is saved on the
+tags. The tags are integrated into the workpiece, which lets them be used directly.
+
+PN532 V3 NFC-reader
+
+This component describes and reads out the NFC-tags.
+The production view on the NFC/RFID reader displays the
+workpiece data and can be used to read or delete
+workpieces manually. The raw data on the
+ NFC tags can be read out using a standard NFC app from mobile devices with NFC readers. The NFC-
+reader is connected to an I²C interface and a 3.3 V power supply at the EXT connection on the TXT
+controller.
+
+nano Router TP-Link
+
+The connection to the fischertechnik cloud is established via the WiFi
+router supplied and integrated into the learning factory. We recommend
+using the web browsers such as Chrome or Firefox. The cloud can be
+used via a personal access, which is created once
+(www.fischertechnik-cloud.com). The cloud servers
+are located in Germany and ensure that strict European requirements apply to data storage.
+
+Personal data is protected in an account with password access that uses extremely secure "OAuth2"
+industry standard. All data sent to the cloud is transmitted encrypted with certificates (https standard, green
+lock in web browser).
+
+Camera
+
+        The surveillance camera mounted on the multi-processing
+        station (MPO) is connected to the TXT controller via a USB
+        interface. It can be controlled using the dashboard in the
+        fischertechnik cloud.
+
+106
+TXT controller
+The complete performance data for the TXT controller can be viewed at
+www.fischertechnik.de/simulieren, here are the most important features:
+· Dual Processor: ARM Cortex A8 (32-bit/600MHz) + Cortex M3
+· Storage capacity: 256 MB DDR3 RAM, 128 MB Flash
+· Storage extension: Micro SD card slot
+· Display: colour 2.4-inch touch display (320x240 pixels) 8 universal inputs: Digital/Analogue 0-
+
+     9VDC, Analogue 0-5 k
+· Display: colour 2.4" touch display (320x240 pixels)
+· 4 quick counter inputs: Digital, frequency up to 1 kHz
+· 4 motor outputs 9 V/250 mA (max.: 800 mA): Infinitely variable speed, short-circuit-proof,
+
+     alternatively 8 individual outputs, e.g. for lamps
+· Combined Bluetooth/WiFi wireless module: BT 2.1 EDR+ 4.0, WiFi 802.11 b/g/n
+· Infrared receiver diode
+· USB 2.0 client: Mini USB port for connection with the PC
+· USB Host port: USB-A port for fischertechnik USB camera, USB sticks, etc.
+· Camera interface: via USB host, Linux camera drivers integrated in the operating system
+· 10-pole pin row to increase inputs and outputs as well as I2C-port
+· Integrated loudspeaker
+· Integrated real-time clock with replaceable buffer battery for recording the measured values
+
+     in a defined period
+· Linux based Open-Source operating system
+· Programming possible with ROBO Pro, C-Compiler, PC-Library, etc.
+· Power supply: 9V DC 3.45 mm port, or fischertechnik 2.5 mm ports
+
+107
+24V adapter board
+There is an adapter board on every Factory module for connecting to the PLC; it is structured as follows:
+
+                                                 Header for connecting model
+
+                             V1 V2 V3 V4                  Relay for
+                                                          Bi-directional
+     Terminals for                                        Motors
+     Valves
+
+                    17x2 header for connecting PLC (ST1)  Terminals to connect PLC
+                                                          (alternative to ST1)
+
+PLC / controller system requirements:
+
+If a different controller besides a PLC SIMATIC S7-1500 is used, such as an Arduino, the following requirements
+
+must be fulfilled.
+
+-    Interface to the adapter board compatible with 24V
+
+-    Maximum cycle time of 10 ms
+
+108
+Assigning the 17x2 header (ST1) for PLC connection:
+
+                                       Terminals
+
+              +24V (actuators)     1                 2    +24V (sensors)
+                      0V (GND)                            0V (GND)
+                               I1  3                 4    I2
+                               I3                         I4
+                               I5  5                 6    I6
+                               I7                         I8
+                              ...  7                 8    ...
+
+                              Q1   9                 10   Q2
+                              Q3                          Q4
+                              Q5   11                12   Q6
+                              Q7                          Q8
+                              ...  13                14   ...
+
+                            GND    15                16   GND
+
+                                   17                18
+
+                                   19                20
+
+                                   21                22
+
+                                   23                24
+
+                                   25                26
+
+                                   27                28
+
+                                   29                30
+
+                                   31                32
+
+                                   33                34
+
+Assigning the adapter boards to the individual stations:
+
+              High-bay    Vacuum         Processing       Sorting line    Sensor station
+              warehouse   suction        Station (MPO)    (SLD)           with camera
+              (HBW)       Gripper (VGR)  Turntable        -               (SSC)
+                          Vertical       -                -               Camera height
+     R1/R2 Conveyor belt  Horizontal     Oven pusher      -               Turn camera
+                          Turntable      Gripper          -
+     R3/R4 Horizontal     -              Vacuum           White ejector   10 pin
+                          -              Lower            Red ejector     14 pin
+     R5/R6 Vertical       -              Oven door        Blue ejector    10 pin
+                          -              Slides           -               34 pin
+     R7/R8 Cantilever     Vacuum
+                                         20 pin           20 pin
+     V1       -           16 pin
+                                         20 pin           14 pin
+     V2       -           10 pin
+                                         34 pin           34 pin
+     V3       -           34 pin
+
+     V4       -
+
+     ST
+
+     (Model) 20 pin
+
+     ST
+
+     (Model) 14 pin
+
+     ST
+
+     (Model)
+
+     ST1
+
+     (PLC) 34 pin
+
+109
+Pulse width modulation:
+
+Bi-directional motors are converted via a relay and can be supplied either via 24V (actuators) or the associated
+PWM terminal.
+
+The jumpers are on the adapter board
+
+            High-bay       Vacuum suction Processing station Sorting line            Sensor station with
+            warehouse                                                                camera (SSC)
+            (HBW)          gripper (VGR) (MPO)                  (SLD)
+            Conveyor belt                                                            - not assigned -
+     PWM 1                 Y(Vertical)    Turntable             - not assigned -     Camera height
+     PWM 2  X(Horizontal)  Z(Horizontal)  - not assigned -      - not assigned -     Turn camera
+     PWM 3                 X(Turn)        - not assigned -      - not assigned -     - not assigned -
+     PWM 4  Y(Vertical)                   Suction (Horizontal)  - not assigned -
+
+            Cantilever
+
+Assigning the PWM jumper:
+Jumper left: PWM selected, motor converted via relay and
+Supplied with power via the associated PWM terminal
+Jumper right: Power supply via +24V (actuators), motor can be converted via a relay
+
+110
+     Factory module assignment plans
+
+     Assignment plan for the vacuum suction gripper
+
+Terminal   Function                     Designation  Clam I/O address Variable name
+no. (ST1)                                            p PLC S7-1500 S7-1500
+1          Power supply (+) actuators   24V DC
+2          Power supply (+) sensors     24V DC       DI1.6  %I1.6  IX_VGR_RefSwitchVerticalAxis_I1
+3          Power supply (-)             0V           DI3.6  %I3.6  IX_VGR_RefSwitchHorizontalAxis_I2
+4          Power supply (-)             0V           DI3.7  %I3.7  IX_VGR_RefSwitchRotate_I3
+5          Vertical reference switch    I1           DI6.0  %I6.0  IX_VGR_EncoderVerticalAxisImp1_B1
+6          Horizontal reference switch  I2           DI6.4  %I6.4  IX_VGR_EncoderVerticalAxisImp2_B2
+7          Turn reference switch        I3           DI6.1  %I6.1  IX_VGR_EncoderHorizontalAxisImp1_B3
+9          Encoder vertical pulse 1     B1           DI6.5  %I6.5  IX_VGR_EncoderHorizontalAxisImp2_B4
+10         Encoder vertical pulse 2     B2           DI6.2  %I6.2  IX_VGR_EncoderRotateImp1_B5
+11         Encoder horizontal pulse 1   B3           DI6.6  %I6.6  IX_VGR_EncoderRotateImp2_B6
+12         Encoder horizontal pulse 2   B4           DO2.0  %Q2.0  QX_VGR_M1_VerticalAxisUp_Q1
+13         Turn encoder pulse 1         B5           DO2.1  %Q2.1  QX_VGR_M1_VerticalAxisDown_Q2
+14         Turn encoder pulse 2         B6           DO2.2  %Q2.2  QX_VGR_M2_HorizontalAxisBackward_Q3
+17         Vertical motor up            Q1 (M1)      DO2.3  %Q2.3  QX_VGR_M2_HorizontalAxisForward_Q4
+18         Vertical motor down          Q2 (M1)      DO2.4  %Q2.4  QX_VGR_M3_RotateClockwise_Q5
+19         Horizontal motor backwards   Q3 (M2)      DO2.5  %Q2.5  QX_VGR_M3_RotateCounterclockwise_Q6
+20         Horizontal motor forwards    Q4 (M2)      DO2.6  %Q2.6  QX_VGR_Compressor_Q7
+21         Turn motor clockwise         Q5 (M3)      DO2.7  %Q2.7  QX_VGR_ValveVacuum_Q8
+22         Turn motor anti-clockwise    Q6(M3)       DO8.0  %QW15  QW_VGR_PWM_Vertical_M1
+23         Compressor                   Q7           DO8.1  %QW17  QW_VGR_PWM_Horizontal_M2
+24         Valve vacuum                 Q8           DO8.2  %QW19  QW_VGR_PWM_Rotate_M3
+25         PWM horizontal               PWM (M1)
+26         PWM vertical                 PWM (M2)
+27         Turn PWM                     PWM (M3)
+
+111
+Model wiring
+
+Terminal  Header ST1                           Ribbon cable  Sensors + actuators model
+17        Vertical up                      1                 Q1/Q2 (M1)
+18        Vertical down                    2
+3.4       GND                              3                 Encoder     power              supply
+2         24V (Sensor)                     4                 Signal                               A
+9         A                                5                 Signal B
+10        B                                6
+5         Reference vertical               7                 I1
+2         24V                              8                 Q3/Q4 (M2)
+19        Horizontal back                  9
+20        Horizontal forward               10                Encoder     power              supply
+3.4       GND                              11                Signal                               A
+2         24V (Sensor)                     12                Signal B
+11        A                                13
+12        B                                14                I2
+6         Reference horizontal             15
+2         24V (Sensor)                     16
+
+          Header ST2
+
+7         Turn reference                   1                 I3
+
+2         24V (Sensor)                     2
+
+21        Turn clockwise                   3                 Q5/Q6 (M3)
+
+22        Turn anti-clockwise              4
+
+3.4       GND                              5
+
+2         24V (Sensor)                     6                 Encoder     power              supply
+                                                             Signal                               A
+13        A                                7
+                                                             Signal B
+
+14        B                                8
+
+3.4       GND                              9
+                                                                           Q7 (compressor)
+23        Compressor
+                                           10
+
+ 3.4                                                         Q8 (Valve vacuum)
+                   Terminal V4
+
+ 24
+
+red = power supply
+yellow = Motor poles reversible via relay
+
+112
+Assignment plan for automated high-bay warehouse (HBW)                           Q5/Q6 + B3/B4
+                                                                           I4
+                                                                                       Q7/Q8
+                                             Q1/Q2                                        I5
+                                                                             I5          I2
+
+          Q3/Q4 + B1/B2
+
+Terminal   Function                       Designation  Clamp  I/O address Variable name
+no. (ST1)                                              SPS
+1          Power supply (+) actuators     24V DC              S7-1500            S7-1500
+2          Power supply (+) sensors       24V DC       DI1.0
+3          Power supply (-)               0V                  %I1.0              IX_HBW_RefSwitchHorizontalAxis_I1
+4          Power supply (-)               0V           DI1.1  %I1.1
+           Reference pushbutton                        DI1.2  %I1.2              IX_HBW_LightBarrierInside_I2
+5          horizontal                     I1           DI1.3  %I1.3              IX_HBW_LightBarrierOutside_I3
+           Light barrier inside                        DI5.1  %I5.1              IX_HBW_RefSwitchVerticalAxis_I4
+6          Light barrier outside          I2           DI5.5  %I5.5              IX_HBW_EncoderHorizontalAxisImp1_B1
+7          Reference pushbutton vertical  I3           DI5.2  %I5.2              IX_HBW_EncoderHorizontalAxisImp2_B2
+8          Encoder horizontal pulse 1     I4           DI5.6  %I5.6              IX_HBW_EncoderVerticalAxisImp1_B3
+11         Encoder horizontal pulse 2     B1           DI1.4                     IX_HBW_EncoderVerticalAxisImp2_B4
+12         Encoder vertical pulse 1       B2                  %I1.4              IX_HBW_SwitchCantileverFront_I5
+13         Encoder vertical pulse 2       B3           DI1.5
+14         Reference pushbutton probe     B4                  %I1.5              IX_HBW_SwitchCantileverBack_I6
+           arm front                                   DO1.0  %Q1.0
+15         Reference pushbutton probe     I5           DO1.1  %Q1.1              QX_HBW_M1_ConveyorBeltForward_Q1
+           arm rear                                    DO1.2  %Q1.2              QX_HBW_M1_ConveyorBeltBackward_Q2
+16         Conveyor belt motor forwards   I6           DO1.3                     QX_HBW_M2_HorizontalTowardsRack_Q3
+           Conveyor belt motor backwards                      %Q1.3              QX_HBW_M2_HorizontalTowardsConveyorB
+17         Motor horizontal towards rack  Q1 (M1)      DO1.4  %Q1.4              elt_Q4
+18         Motor horizontal towards       Q2 (M1)      DO1.5  %Q1.5              QX_HBW_M3_VerticalAxisDownward_Q5
+19         conveyor belt                  Q3 (M2)      DO1.6  %Q1.6              QX_HBW_M3_VerticalAxisUpward_Q6
+           Vertical motor down                         DO1.7  %Q1.7              QX_HBW_M4_CantileverForward_Q7
+20         Vertical motor up              Q4 (M2)      DO7.0  %QW7               QX_HBW_M4_CantileverBackward_Q8
+           Cantilever motor forwards                   DO7.1  %QW9               QW_HBW_PWM_ConveyorBelt_M1
+21         Cantilever motor backwards     Q5 (M3)      DO7.2  %QW11              QW_HBW_PWM_HorizontalAxis_M2
+22         PWM conveyor belt              Q6 (M3)      DO7.3  %QW13              QW_HBW_PWM_VerticalAxis_M3
+23         PWM horizontal                 Q7 (M4)                                QW_HBW_PWM_Cantilever_M4
+24         PWM vertical                   Q8 (M4)
+25         PWM cantilever                 PWM (M1)
+26                                        PWM (M2)
+27                                        PWM (M3)
+28                                        PWM (M4)
+
+113
+Model wiring
+
+Terminal  Header ST1                             Ribbon cable  Sensors + actuators model
+5                                                              I1
+2         Reference horizontal               1                 I2
+6                                                              I3
+2         24V (Sensor)                       2                 Q1/Q2 (M1)
+7                                                              reserved
+2         Photo-transistor internal          3
+17
+18        24V (Sensor)                       4
+3.4
+2         Photo-transistor external          5
+9
+10        24V (Sensor)                       6
+3.4
+2         Conveyor belt forwards             7
+19
+          Conveyor belt backwards            8
+20
+3.4       GND                                9
+2
+11        9V (generated from 24V sensor)     10
+12
+          reserved                           11
+8
+2         reserved                           12
+21
+22        GND                                13                Lights
+3.4                                                            for light barrier
+2         24V (Sensor)                       14
+13                                                             Q3/Q4 (M2)
+14        Motor horizontal towards rack      15
+                                                               Horizontal
+15        Motor horizontal towards conveyor                    power
+2                                                              Signal
+23        belt                               16                Signal B
+24
+          GND                                17                I4
+16
+2         24V (Sensor)                       18                Q6/Q7 (M3)                 encoder
+                                                                                            supply
+          A                                  19                Vertical                           A
+                                                               power
+          B                                  20                Signal                     encoder
+                                                               Signal B                     supply
+          Header ST2                                           I5                                 A
+
+          Reference pushbutton vertical      1                 Q7/Q8 (M4)
+
+          24V (Sensor)                       2                 I6
+
+          Vertical axis down                 3
+
+          Vertical axis up                   4
+
+          GND                                5
+
+          24V (Sensor)                       6
+
+          A                                  7
+
+          B                                  8
+
+          Reference pushbutton probe arm
+
+          forward                            9
+
+          24V (Sensor)                       10
+
+          Probe arm forward                  11
+
+          Probe arm back                     12
+
+          Reference pushbutton probe arm
+
+          rear                               13
+
+          24V (Sensor)                       14
+
+red = power supply
+yellow = Motor poles reversible via relay
+
+114
+     Assignment plan for the multi-processing station with kiln (MPO)
+
+     I9                                Q10
+                 I1                                               Q4
+
+                                                                          O14
+
+     I8
+
+         Q7/Q8                         I4                             Q3
+
+                      I1                                      I2
+                                   I3
+
+Not shown: Q1, Q2, Q5, Q6, Q9, Q11, Q12, Q13, I4, I5, I6, I7
+
+115
+Terminal   Function                  Designation  Clamp  I/O address Variable name
+no. (ST1)                                         SPS
+1                                    24V DC              S7-1500  S7-1500
+                                     24V DC       DI1.7
+2          Power supply (+)          0V
+3                                    0V           DI2.0
+4          actuators                 I1
+                                                  DI2.1
+5          Power supply (+)          I2
+                                                  DI2.2
+6          sensors                   I3
+                                                  DI2.3
+7          Power supply (-)          I4
+                                                  DI2.4
+8          Power supply (-)          I5           DI2.5
+                                                  DI2.6
+9          Reference switch          I6           DI2.7
+                                     I7           DO3.0
+10         turntable (suction        I8           DO3.1
+                                     I9           DO3.2
+11         position)                 Q1 (M1)      DO3.3  %I1.7    IX_MPO_RefSwitchTurnTable_PosVac_I1
+                                     Q2 (M1)      DO3.4
+12         Reference switch          Q3 (M2)      DO3.5
+13                                   Q4 (M3)      DO3.6
+17         turntable (conveyor       Q5 (M4)      DO3.7
+                                     Q6 (M4)      DO4.0
+18         belt position)            Q7 (M5)      DO4.1  %I2.0    IX_MPO_RefSwitchTurnTable_PosBelt_I2
+                                     Q8 (M5)      DO4.2  %I2.1    IX_MPO_LightBarrierEndOfConBelt_I3
+19         Light barrier end of      Q9           DO4.3
+20                                   Q10          DO4.4
+21         conveyor belt             Q11          DO4.5
+                                     Q12          DO9.0
+22         Reference switch          Q13          DO9.1
+                                     Q14
+23         turntable           (saw  PWM (M1)
+                                     PWM (M5)
+24         position)                                     %I2.2    IX_MPO_RefSwitchTurnTable_PosSaw_I4
+25
+26         Reference switch
+27
+28         suction (turntable
+29
+30         position)                                     %I2.3    IX_MPO_RefSwitchVac_PosTurnTable_I5
+31
+32         Reference switch                              %I2.4    IX_MPO_RefSwitchOvenFeederInside_I6
+
+           oven feeder inside                            %I2.5    IX_MPO_RefSwitchOvenFeederOutside_I7
+
+           Reference switch                              %I2.6    IX_MPO_RefSwitchVac_PosOven_I8
+                                                         %I2.7    IX_MPO_LightBarrierOven_I9
+           oven feeder outside
+                                                         %Q3.0    QX_MPO_M1_TurnTableClockwise_Q1
+           Reference switch
+                                                         %Q3.1    QX_MPO_M1_TurnTableCounterclockwise_Q2
+           vacuum (kiln position)
+                                                         %Q3.2    QX_MPO_M2_ConveyorBeltForward_Q3
+           Light barrier kiln                            %Q3.3    QX_MPO_M3_Saw_Q4
+
+           Turn motor turntable                          %Q3.4    QX_MPO_M4_OvenFeederRetract_Q5
+
+           clockwise                                     %Q3.5    QX_MPO_M4_OvenFeederExtend_Q6
+
+           Turn motor slewing                            %Q3.6    QX_MPO_M5_VacuumTowardsOven_Q7
+
+           ring anti-clockwise                           %Q3.7    QX_MPO_M5_VacuumTowardsTurnTable_Q8
+                                                         %Q4.0    QX_MPO_LightOven_Q9
+           Conveyor belt motor                           %Q4.1    QX_MPO_Compressor_Q10
+                                                         %Q4.2    QX_MPO_ValveVacuum_Q11
+           forwards                                      %Q4.3    QX_MPO_ValveLowering_Q12
+                                                         %Q4.4    QX_MPO_ValveOvenDoor_Q13
+           Motor saw                                     %Q4.5    QX_MPO_ValveFeeder_Q14
+                                                         %QW23    QW_MPO_PWM_TurnTable_M1
+           Retract oven feeder                           %QW25    QW_MPO_PWM_Vacuum_M5
+
+           motor
+
+           Extend oven feeder
+
+           motor
+
+           Vacuum towards oven
+
+           motor
+
+           Vacuum towards
+
+           turntable motor
+
+           Lamp kiln
+
+           Compressor
+
+           Valve vacuum
+
+           Valve lowering
+
+           Valve kiln door
+
+           Valve feeder
+
+           PWM turntable
+
+           PWM vacuum
+
+116
+Model wiring
+
+Terminal Header ST1                          Ribbon cable  Sensors + actuators on model
+                                                           I1
+5    Turntable reference button      1                     I2
+                                                           I3
+2    24V (Sensor)                    2                     Q1/Q2 (M1)
+                                                           Light barrier lamp
+6    Turntable reference button      3                     I5
+                                                           I4
+2    24V (Sensor)                    4                     Q3 (M2)
+                                                           Q4 (M3)
+7    Light barrier end of conveyor belt 5
+                                                           Q5/Q6 (M4)
+2    24V (Sensor)                    6                     I6
+                                                           I7
+17   Turn motor turntable clockwise  7                     I8
+                                                           Q7/Q8(M5)
+18   Turn turntable anti-clockwise   8                     Q9 (oven light
+                                                           Q10 (compressor)
+3.4  GND                             9                     I9
+                                                           Light barrier lamp
+2    24V (Sensor)                    10
+
+9    Vacuum reference button         11
+
+2    24V (Sensor)                    12
+
+8    Turntable reference button pos. saw 13
+
+2    24V (Sensor)                    14
+
+3.4  GND                             15
+
+19   Conveyor belt                   16
+
+3.4  GND                             17
+
+20   Saw                             18
+
+     not assigned                    19
+
+     not assigned                    20
+
+     ST2
+
+     not assigned                    1
+
+     not assigned                    2
+
+21   Retract oven feeder             3
+
+22   Extend oven feeder              4
+
+10   Oven feeder inside              5
+
+2    24V (Sensor)                    6
+
+11   Oven feeder outside             7
+
+2    24V (Sensor)                    8
+
+12   Vacuum on oven                  9
+
+2    24V (Sensor)                    10
+
+23   Vacuum to oven                  11
+
+24   Vacuum to turntable             12
+
+3.4  GND                             13
+
+25   Lamp kiln                       14
+
+3.4  GND                             15
+
+26   Compressor                      16
+
+13   Oven light barrier              17
+
+2    24V (Sensor)                    18
+
+3.4  GND                             19
+
+2    24V (Sensor)                    20
+
+117
+3.4  Terminal V1                           Q11 (Valve vacuum)
+                                           Q12 (lower valve)
+27                                         Q13 (oven door valve)
+                                           Q14 (feeder valve)
+3.4  Terminal V2
+
+28
+
+3.4  Terminal V3
+
+29
+
+3.4
+               Terminal V4
+
+30
+
+red = power supply
+yellow = Motor poles reversible via relay
+
+118
+Assignment plan for the sorting line using colour recognition (SLD)
+
+                    I3
+            A4
+
+        Q2
+I2
+
+  I1                                                                        I7
+
+Coupling to the multi-                                         I6
+ processing station                                  I5
+  Not shown: Q1, Q3, Q4, Q5
+
+Terminal   Function              Designation  Clamp  I/O address Variable name
+no. (ST1)                                     SPS
+1          Power supply (+)      24V DC              S7-1500  S7-1500
+           actuators                          DI3.0
+2          Power supply (+)      24V DC       DI3.1  %I3.0    IX_SLD_PulseCounter_I1
+3          sensors               0V           DI3.2  %I3.1    IX_SLD_LightBarrierInlet_I2
+4          Power supply (-)      0V
+5          Power supply (-)      I1           AI1.0  %I3.2    IX_SLD_LightBarrierBehindColorSensor_I3
+6          Pulse key             I2           DI3.3
+7          Light barrier input   I3           DI3.4  %IW7     IW_SLD_ColorSensor_A4
+           Light barrier after   A4           DI3.5  %I3.3    IX_SLD_LightBarrierWhite_I5
+9          colour sensor         Analogue     DO5.0  %I3.4    IX_SLD_LightBarrierRed_I6
+           Colour sensor         0-10VDC      DO5.1  %I3.5    IX_SLD_LightBarrierBlue_I7
+10                               I5           DO5.2  %Q5.0    QX_SLD_M1_ConveyorBelt_Q1
+11         Light barrier white   I6           DO5.3  %Q5.1    QX_SLD_Compressor_Q2
+12         Light barrier red     I7           DO5.4
+17         Light barrier blue    Q1                  %Q5.2    QX_SLD_ValveFirstEjectorWhite_Q3
+18         Motor conveyor belt   Q2
+20         Compressor            Q3                  %Q5.3    QX_SLD_ValveSecondEjectorRed_Q4
+           Valve first ejector
+21         (white)               Q4                  %Q5.4    QX_SLD_ValveThirdEjectorBlue_Q5
+           Valve second ejector
+22         (red)                 Q5
+           Valve third ejector
+           (blue)
+
+119
+Model wiring
+
+Terminal Header ST1                          Ribbon cable  Sensors + actuators model
+                                        1                  I1
+5    Pulse key                          2                  I2
+                                        3                  I3
+2    24V (Sensor)                       4                  Q2 (compressor)
+                                        5                  Q1 (Conveyor belt)
+6    Light barrier input                6
+                                        7                  Colour sensor (A4)
+2    24V (Sensor)                       8
+                                        9                  Light barrier lamp
+7    Light barrier after colour sensor  10                 Light barrier lamp
+                                        11
+2    24V (Sensor)                       12                 I5
+                                        13                 I7
+3.4  GND                                14                 I6
+                                        15                 Light barrier lamp
+18   Compressor                         16                 Light barrier lamp
+                                        17                 Light barrier lamp
+3.4  GND                                18
+                                        19                 Q3 (Valve first ejector, white)
+17   Conveyor belt                      20                 Q4 (Valve second ejector, red)
+                                                           Q5 (Valve third ejector, blue)
+3.4  GND                                1
+                                        2
+2    9V (generated from 24V )           3
+                                        4
+9    Colour sensor (0-10V)              5
+                                        6
+     not assigned                       7
+                                        8
+3.4  GND                                9
+                                        10
+2    24V (Sensor)                       11
+                                        12
+3.4  GND                                13
+                                        14
+2    24V (Sensor)
+
+     not assigned
+
+     not assigned
+
+     Header ST2
+
+     not assigned
+
+     not assigned
+
+10   Light barrier white
+
+2    24V (Sensor)
+
+12   Light barrier blue
+
+2    24V (Sensor)
+
+11   Light barrier red
+
+2    24V (Sensor)
+
+3.4  GND
+
+2    24V (Sensor)
+
+3.4  GND
+
+2    24V (Sensor)
+
+3.4  GND
+
+2    24V (Sensor)
+
+3.4  Terminal V1
+
+20
+
+3.4  Terminal V2
+
+21
+
+ 3.4
+                   Terminal V3
+
+ 22
+
+red = power supply
+
+120
+Assignment plan for sensor station with surveillance camera (SSC)
+
+             Q5                                                      M2
+          Q6                                                       I1
+
+                             I2            Q8
+        Q7                            I4
+     M1
+
+                                  A1
+          I3
+
+121
+Environmental sensor Photo-resistor
+The NFC reader is connected to the TXT controller via the I²C interface.
+The mounted surveillance camera is connected to the TXT Controller via a USB interface.
+Data from the environmental sensor and photo-resistor is also read in by the TXT Controller.
+
+TXT-Controller (TxtGatewayPLC)
+
+122
+Terminal   Function                Designation  Clamp  I/O address Variable name
+no. (ST1)                                       SPS
+1                                  24V DC              S7-1500  S7-1500
+                                                DI4.0
+2          Power supply (+)        24V DC       DI4.1
+3                                  0V           DI4.2
+4          actuators               0V           DI4.3
+5
+6          Power supply (+)        I1           AI1.1
+7                                  I2
+8          sensors                 I3           DI5.3
+
+9          Power supply (-)        I4           DI5.7
+                                   A1
+11         Power supply (-)        Analogue     DI6.3
+                                   0-10VDC
+12         Reference switch 1      B1           DI6.7  %I4.0    IX_SSC_RefSwitchVerticalAxis_I1
+                                                DO6.0  %I4.1    IX_SSC_RefSwitchHorizontalAxis_I2
+13         Reference switch 2      B2           DO6.1
+                                                DO6.2  %I4.3    IX_SSC_LightBarrierStorage_I3
+14         Light          barrier  B3           DO6.3  %I4.2    IX_SSC_LightBarrierOutsourcing_I4
+19                                              DO6.4
+20         outsourcing             B4           DO6.5
+21                                              DO6.6
+22         Light barrier storage   Q1 (M1)      DO6.7
+23                                 Q2 (M1)      DO9.2
+24         Colour sensor                        DO9.3
+25                                 Q4 (M2)
+26         Encoder vertical        Q3 (M2)             %IW9     IW_SSC_ColorSensor_A1
+27         pulse 1                 Q5
+28         Encoder vertical        Q6                  %I5.3    IX_SSC_EncoderVerticalAxisImp1_B1
+           pulse 2                 Q7
+           Encoder horizontal      Q8                  %I5.7    IX_SSC_EncoderVerticalAxisImp2_B2
+           pulse 1
+           Encoder horizontal      PWM (M1)            %I6.3    IX_SSC_EncoderHorizontalAxisImp1_B3
+           pulse 2                 PWM (M2)
+           Vertical motor up                           %I6.7    IX_SSC_EncoderHorizontalAxisImp2_B4
+           Vertical motor down                         %Q6.0    QX_SSC_M1_VerticalAxisUp_Q1
+           Turn motor anti-                            %Q6.1    QX_SSC_M1_VerticalAxisDown_Q2
+           clockwise                                            QX_SSC_M2_HorizontalAxisCounter
+           Turn motor clockwise                        %Q6.2    clockwise_Q4
+           LED green                                   %Q6.3    QX_SSC_M2_HorizontalAxisClockwise_Q3
+           LED yellow                                  %Q6.4    QX_SSC_LED_Green_Q5
+           LED red                                     %Q6.5    QX_SSC_LED_Yellow_Q6
+           LED red online status                       %Q6.6    QX_SSC_LED_Red_Q7
+                                                       %Q6.7    QX_SSC_LED_Red_Online_Q8
+           PWM vertical                                %QW27    QW_SSC_PWM_Vertical_M1
+           PWM cantilever                              %QW29    QW_SSC_PWM_Horizontal_M2
+
+123
+   Model wiring
+
+        Stiftleiste ST1
+
+Klemme                                 Flachbandkabel Sensoren/Aktoren am Modell
+                                                            I1
+5       Referenz Kamera vertikal   1
+
+2       24V (Sensor)               2
+
+19      Kamera hoch                3   Q1/Q2 (M1)
+
+20      Kamera runter              4
+
+3,4     GND                        5   Encoder              vertikal
+
+2       24V (Sensor)               6   Spannungsversorgung
+
+11      A                          7   Signal                    A
+
+12      B                          8   Signal B
+
+6       Referenz Kamera horizontal 9   I2
+
+2       24V (Sensor)               10
+
+        Stiftleiste ST2
+
+21      Kamera links               1   Q3/Q4(M2)
+
+22      Kamera rechts              2
+
+3,4     GND                        3   Encoder      horizontal
+
+2       24V (Sensor)               4   Spannungsversorgung
+
+13      A                          5   Signal                    A
+
+14      B                          6   Signal B
+
+3,4     GND                        7   Q5 LED grün
+
+23      LED grün                   8
+
+3,4     GND                        9   Q6 LED gelb
+
+24      LED gelb                   10
+
+3,4     GND                        11  Q7 LED rot
+
+25      LED rot                    12
+
+3,4     GND                        13  Q8 LED rot (Kamera)
+
+26      LED rot(Kamera)            14
+
+        Stiftleiste ST3
+
+3,4     GND                        1   Spannungsversorgung
+                                       Farbsensor
+2       9V (Aus 24V Sensor erzeugt) 2  I3
+
+7       Lichtschranke Auslagerung 3    Lampen für Lichtschranke
+
+2       24V (Sensor)               4   I4
+                                       I5
+3,4     GND                        5   -
+
+2       24V (Sensor)               6
+
+8       Lichtschranke Einlagerung  7
+
+2       24V (Sensor)               8
+
+9       Farbsensor                 9
+
+        nicht belegt               10
+
+124
+Assignment diagrams PLC connection board (560840 and
+560841)
+
+In this chapter you will find the assignment diagrams for the two boards which are connected to one another via two
+cables (I) and (II).
+560841 Learning Factory 4.0 24V with PLC connection board and
+560840 Learning Factory 4.0 24V compl. with PLC S7-1500
+On the model side, the distributor board is connected to the individual stations in the model via 5 flat ribbon cables. These
+are already included in the delivery of variant 560841 or 560840.
+
+Assignment diagram distributor board on the model:
+With variant 560840 the PLC connection board is already wired up. With variant 560841 the PLC has to be connected to the
+distributor board via cables. These are divided into groups, e.g. DO1+2a, ..., AI1b.
+The cover can be loosened from below by undoing the four cross-head screws. When the bottom section has been
+removed, the connectors can be used to connect the inputs and outputs to the PLC assemblies.
+Assignment diagram PLC connection board:
+
+  +24V
+125
+126
+127
+Programming tasks
+In order to handle programming tasks, you will require prior knowledge of the programming language Structured
+Text (ST or SCL) and on how to handle the programming tool you are using.
+The provided programming solutions have been created with the TIA Portal V16 for a programmable controller
+SIMATIC S7-1500 with CPU1512SP
+Alternatively, other control systems can also be used with appropriate software.
+An introduction to programming with the TIA Portal is available, for instance, here from SIEMENS:
+http://www.siemens.com/sce/S7-1500
+https://new.siemens.com/global/en/company/sustainability/education/sce/learning-training-
+documents/advanced-programming.html
+Further information is available at:
+https://github.com/fischertechnik
+The global fischertechnik library Library_LearningFactory_4_0_24V and program solutions are available at:
+https://github.com/fischertechnik/plc_training_factory_24v
+
+128
+Programming task 1:
+Configuring and commissioning the SIMATIC controller with CPU1512SP
+
+Task:
+The complete hardware configuration for the controller must be created, loaded and tested for the
+LearningFactory_4.0_24V, with all input and output modules.
+A non-specified CPU will be created in order to determine all components.
+This project with hardware configuration serves as the basis for all subsequent programming tasks.
+Planning
+1. Wire a START button as normally open contact (NO) and a STOP button as normally closed contact (NC) to
+
+     two free inputs on the controller. Connect the LearningFactory_4_0_24V to the PLC and switch on the
+     controller.
+2. Create the project LearningFactory_4_0_24V_Task01_HWConf in the TIA portal.
+3. In the TIA portal project LearningFactory_4_0_24V_Task01_HWConf, add a controller SIMATIC ET 200SP CPU
+     or SIMATIC S7-1500 as a new device. Do so as a non-specified CPU, as described in the following
+     programming information.
+4. Connect the programming device to the CPU and determine the configuration of the connected device
+     according to the programming information.
+5. Set the input/output addresses of the detected modules according to the programming information and
+     configure the module.
+6. As shown in the programming information, dearchive the global library Library_LearningFactory_4_0_24V ,
+     and from there insert the global Start-Stop variable table into your project.
+7. Load and test the hardware configuration with variable table into the controller.
+8. Create an observation table named Beobachtungstabelle_watch table, insert signals from the global variable
+     table there and check it by monitoring the button functions.
+9. Save and archive the project LearningFactory_4_0_24V_Task01_HWConf.
+
+129
+Programming information:
+Information on connecting the START and STOP buttons:
+Two buttons are required for the following programming tasks. A START button as a NO contact
+(NormallyOpen) and a STOP button as a NC contact (NormallyClosed). Fischertechnik mini-buttons can be
+used for this purpose.
+
+The mini-buttons are equipped with changeover contacts and can be used as both normally closed and
+normally open contacts. The figure shows a circuit diagram of the mini-pushbuttons.
+
+Contacts 1 and 2 are wired to a digital input on the PLC for use as NC contacts (NormallyClosed).
+Contacts 1 and 3 are wired to a digital input on the PLC for use as NO contacts (NormallyOpen).
+Details on connecting SIMATIC assemblies are provided in the handbooks.
+Here is an example of connecting the digital input module DI 16x24VDC ST to the BaseUnit BU type A0 without
+AUX terminal (1-wire connection):
+
+130
+Information on configuring a non-specified CPU1512SP:
+Before a SIMATIC S7-1500 PLC can be configured, its hardware must be configured.
+The fastest way to do so is to create a non-specified CPU and then have all components detected.
+To do so, the programming device must be connected to the controller via Ethernet, and the IP addresses must be
+set so that both devices are in the same subnet.
+Setting the IP address is described in this document in the section Commissioning and adjusting the SIMATIC
+controller CPU1512SP.
+The configuration for our Training Factory Industry 4.04.0 can be completed using the following steps.
+
+              First, start the Totally Integrated Automation Portal by double clicking on it. (  TIA Portal V16)
+
+              In the portal view, click  Start  and then Create new project. Change the project name, path,
+                 author and comment accordingly and then click  Create
+
+131
+       Then select  Start  Devices & Networks  and Add new device in the portal.
+          Create a new CPU. To do so, use a non-specified model of the SIMATIC ET200 CPU with order number
+          6ES7 5XX-XXXXX-XXXX.
+          (Controller  SIMATIC ET200 CPU  ET 200SPCPU  Non-specified ST200SP CPU  6ES7 5XX-XXXXX-
+          XXXX  V2.8)
+          Assign a device name (device name  PLC), select Open device view and then click  Add.
+
+       The TIA Portal will switch automatically to the project view, and will display a notification that this device
+          is not specified. To have the hardware configuration identified automatically, start the detection by
+          clicking Identify in the yellow info box. (  identify)
+
+132
+              First, select the type of PG/PC interface you are using and the network card you want to use to
+                 create a connection to the PLC via Ethernet. ( Type of PG/PC interface: PN/IE  PG/PC interface:
+                 Intel(R) Ethernet ...)
+                 Now, start the search for devices on the network by clicking the  Start search button
+                 Then, all available devices will be detected and listed. If you have selected the right CPU, then
+                 clicking  Detect will cause the CPU in question and connected modules to be detected.
+
+                Note: If your CPU is not in the list, ensure you have selected the right network card and that your
+                laptop and CPU are connected.
+
+133
+              The TIA portal will now show the complete device configuration for the selected CPU. Now, you
+                 can configure the CPU and the input/output assemblies according to your specifications.
+
+134
+Information on configuring the input/output assemblies
+The addresses of the assemblies should be set as shown here.
+
+Pulse width modulation (PWM) should be set as the operating mode for the output modules with addresses DO 7
+- DO 30.
+
+135
+Operating mode DI \ Oversampling should be set for the input modules with addresses DI 5 to DI 6 for the encoder
+inputs.
+
+The measurement type voltage should be set with a measurement range of 0-10V for the channels of the analogue
+input modules.
+
+136
+Information on global libraries:
+The global variable tables and a module for encoder evaluation in a compressed library
+Library_LearningFactory_4_0_24V.zal16 are provided for programming tasks.
+This can be opened by clicking on the symbol in Global Libraries to open a library, then selecting the
+fileLibrary_LearningFactory_4_0_24V.zal16.
+
+Elements from the library can then simply be copied to the relevant project folder via drag & drop.
+
+137
+Information on observation tables:
+Observation tables can be created to test the function of factory modules and to determine position values later
+on. Variables can then easily be moved to the observation tables via drag & drop from the detailed view of variable
+tables.
+
+In the expanded view , the inputs and outputs used in the program can also be controlled continuously. If
+there are no buttons for the START and STOP functions, then these can be simulated in this manner.
+
+138
+Programming task 2:
+Sensor station with camera (SSC), colour detection with colour sensor
+
+Task:
+
+The colour sensor on the input/output station should be used in the sensor station with camera (SSC) to detect different
+blue/white/red workpieces.
+
+When there is a workpiece on the colour sensor, the measured value of the colour sensor is evaluated, and the
+result is displayed on an assigned LED. The evaluation only runs for as long as the START button is pressed.
+
+Colour assignment:  green LED (Q5)
+Blue                yellow LED (Q6)
+White               red LED (Q7)
+Red                 red LED online status (Q8)
+No colour detected
+
+The program should be created in the programming language Structured Text (ST or SCL).
+
+Planning
+1. In the TIA Portal, open the projectLearningFactory_4_0_24V_Task01_HWConf and save it under the name
+
+     LearningFactory_4_0_24V_Task02_SensorsSSC.
+2. Copy the global variable table SSC Sensor Station, as shown in programming task 1, from the library
+
+     Library_LearningFactory_4_0_24V and insert it into your project.
+3. As shown in programming task 1, expand the observation table, determine value ranges for the 3 colours
+
+     blue/white/red there by placing the different workpieces on the sensor, and check the function of the buttons
+     and sensors.
+4. Create a library-capable code module in the programming language structured text (ST or SCL).
+5. Create a new organisational module Main [OB1] in the programming language Structured Text (ST or SCL),
+     access the library-capable code module there and connect these with global variables.
+6. Load the complete program to the controller.
+7. Test the program on the sensor station using a camera (SSC).
+8. Monitor the program online and correct any errors.
+9. Save and archive the project LearningFactory_4_0_24V_Task02_SensorsSSC.
+
+139
+Programming information
+Information on creating library-capable programming modules:
+Library-capable code modules are preferred for structured programming of PLC programs. This means that the
+input and output parameters of a function or function module are determined generally in local variables, and are
+only assigned current global variables (inputs/outputs) when using the module.
+The advantage of this is that the module can be accessed multiple times.
+Information on the colour sensor
+The fischertechnik colour sensor emits white light, which different colour surfaces reflect to different degrees.
+The photo-transistor measures the intensity of the reflected light and measures read as a voltage value ranging
+between 0 V and 9 V on an analogue input 0-10V on the PLC. This measured value (0-9 V) is digitised into a whole
+number between 0 and 24883 by the analogue input assembly.
+The measured value depends on the ambient brightness as well as the distance of the sensor from the coloured
+surface.
+Therefore, the values for the 3 different workpieces in blue/white/red should be determined through multiple
+measurements.
+This makes it possible to calculate an average value for each colour. For the analysis, you should also stipulate a
+tolerance range around this average value, since measurement results always involve a certain amount of
+inaccuracy.
+
+140
+Programming task 3:
+Sensor station with camera (SSC), camera movement without pulse width modulation (PWM)
+
+Task:
+
+The camera movement should be activated via the outputs directly in the sensor station with camera (SSC),
+without pulse width modulation (PWM).
+
+Press the START button to start a reference run. The camera will move horizontally and clockwise to the position
+of the reference switch, horizontally and vertically down to the reference position for the vertical axis.
+Press the STOP button to move the camera up for 2 seconds horizontally in an anti-clockwise direction, and
+vertically up.
+If START or STOP are pressed while the camera is moving, the direction will be reversed.
+
+The program should be created in the programming language Structured Text (ST or SCL).
+
+Planning
+1. In the TIA Portal, open the projectLearningFactory_4_0_24V_Task01_HWConf and save it under the name
+
+     LearningFactory_4_0_24V_Task03_CameraSSC.
+2. Copy the global variable table SSC Camera Station, as shown in programming task 1, from the library
+
+     Library_LearningFactory_4_0_24V and insert it into your project.
+3. Insert the jumpers to provide a power supply to the bi-directional motors, so that the motors are fed directly
+
+     via the +24V actuators.
+4. Add to the monitoring table as shown in programming task 1, and check the function of I/O signals.
+5. Create a library-capable code module in the programming language structured text (ST or SCL).
+6. Create a new organisational module Main [OB1] in the programming language Structured Text (ST or SCL),
+
+     access the library-capable code module there and connect these with global variables.
+7. Load the complete program to the controller.
+8. Test the program on the sensor station using a camera (SSC).
+9. Monitor the program online and correct any errors.
+10. Save and archive the project LearningFactory_4_0_24V_Task02_CameraSSC.
+11. Insert the jumpers for the power supply to the bi-directional motors so that they are fed via the associated PWM
+
+     terminals 2 and 3.
+
+141
+Programming information
+
+Information on pulse width modulation (PWM):
+ The bi-directional motors for the horizontal axis (turn camera) and the vertical axis (camera height) are controlled
+ by relays and can be fed either directly via 24V of the actuators, or via the associated PWM terminals 2 and 3.
+
+PWM 1  Sensor station with
+PWM 2  camera (SSC)
+PWM 3  - not assigned -
+PWM 4  Camera height
+       Turn camera
+       - not assigned -
+
+Assigning the PWM jumper:
+The jumpers should be inserted at the right for this task for power supply via +24V (actuators).
+
+The jumpers are on the adapter board
+
+Programming information
+Since the positive signal flank of the START button should be analysed in this task, and a timer is used, a function
+block (FB) must be programmed here as a coding module.
+
+142
+Programming task 4:
+Sorting line with colour detection (SLD); sequence with simple positioning function without
+colour detection
+
+Task:
+
+Workpieces should be transported in the sorting line with colour detection (SLD) from the start of the belt to the
+second storage location, regardless of their colour.
+
+If there is a workpiece on the belt at the entrance to the light barrier, and if the second storage location is free,
+press the START button to switch on the belt. The pulse button counts the pulses from the light barrier to the colour
+sensor, in order to detect position. The belt should be stopped once the workpiece is in front of the second
+extension cylinder.
+There, the workpiece is moved to the second storage position by the second extension cylinder.
+The workpiece must then be removed manually there.
+
+Press the STOP button to stop the process. Workpieces must be removed from the system before the sorting line
+can be started once again.
+
+The program should be created in the programming language Structured Text (ST or SCL).
+
+Planning
+1. In the TIA Portal, open the projectLearningFactory_4_0_24V_Task01_HWConf and save it under the name
+
+     LearningFactory_4_0_24V_Task04_SortingSLD.
+2. Copy the global variable table SLD Sorting Line with Detection, as shown in programming task 1, from the
+
+     library Library_LearningFactory_4_0_24V and insert it into your project.
+3. Add to the monitoring table as shown in programming task 1, and check the function of I/O signals.
+4. Create a library-capable code module with the sequence in the programming language structured text (ST or
+
+     SCL).
+5. Create a new organisational module Main [OB1] in the programming language Structured Text (ST or SCL),
+
+     access the library-capable code module there and connect these with global variables.
+6. Load the complete program to the controller.
+7. Test the program on the sorting line with colour detection (SLD).
+8. Monitor the program online and correct any errors.
+9. Save and archive the project LearningFactory_4_0_24V_Task04_SortingSLD.
+
+143
+Programming information
+Information on programming sequences in the programming language structured text (ST or SCL).
+In addition to other options for programming a process control or a sequence in the programming language
+Structured Text (ST or SCL), the control or sequence can be programmed, for instance, in a case instruction.
+The number of the step that is currently being completed is always in the statistical variable #Step_number.
+Only the commands programmed for the relevant step number are executed.
+The system transitions to the next step by incrementing the variable #Step_number in the step by +1.
+The variable #Step_number is set to 0 to transition from the last step to step 0 and reset the sequence.
+
+Since statistical variables are also required in the sequence, a function block (FB) must be programmed here as
+a code module.
+Information on positioning
+Since the conveyor belt does not move very quickly, and since the position in front of the extension cylinder does
+not have to be very exact, it is enough to detect signals from the pulse sensor in the normal cyclical organisational
+block OB1 for this simple positioning function.
+A simple counter can be used to count the pulses in the program. The value can then be compared.
+You can determine the number of required pulses by activating the conveyor belt motor and observing the counter
+value.
+
+144
+Programming task 5:
+Vacuum suction gripper (VGR); sequence with pulse width modulation (PWM) and simple
+positioning function
+
+Task:
+The vacuum suction gripper station (VGR) should be used to transport workpieces independent of their colour
+from the material storage to the material scrap area.
+
+The motors for gripper movements are controlled via a relay and supplied with power via the associated PWM
+terminals. The motor speed can be set using the output signals from pulse width modulation (PWM). The speed
+should be set fairly low in this task, so that positioning is simpler.
+
+Press the START button to start the process. First, the suction gripper moves back horizontally to the reference
+switch, then up vertically, and finally in a clockwise direction to the reference position at the material storage.
+Then, it positions the vacuum down vertically to the pick-up position at the material storage,
+then switches the vacuum on and moves back up to the reference switch.
+Now the suction gripper turns anti-clockwise to set down material scrap, then vertically down to the discharge
+position, where it switches the vacuum off again.
+Press the STOP button to stop the process.
+The program should be created in the programming language Structured Text (ST or SCL).
+
+Planning
+1. In the TIA Portal, open the projectLearningFactory_4_0_24V_Task01_HWConf and save it under the name
+
+     LearningFactory_4_0_24V_Task05_VacuumGripperVGR.
+2. Copy the global variable table VGR Vacuum Gripper Robot, as shown in programming task 1, from the library
+
+     Library_LearningFactory_4_0_24V and insert it into your project.
+3. Check whether the jumpers for the power supply to the bi-directional motors are inserted so that they are fed
+
+     via the associated PWM terminals 1, 2 and 3.
+4. Add to the monitoring table as shown in programming task 1, and check the function of I/O signals.
+5. Create a library-capable code module with the sequence in the programming language structured text (ST or
+
+     SCL).
+6. Create a new organisational module Main [OB1] in the programming language Structured Text (ST or SCL),
+
+     access the library-capable code module there and connect these with global variables.
+7. Load the complete program to the controller.
+8. Test the program using the vacuum suction gripper (VGR).
+9. Monitor the program online and correct any errors.
+10. Save and archive the project LearningFactory_4_0_24V_Task05_VacuumGripperVGR.
+
+145
+Programming information
+
+Information on pulse width modulation (PWM):
+ The bi-directional motors for turning, for the horizontal axis and the vertical axis are controlled by relays and can
+ be fed either directly via 24V of the actuators, or via the associated PWM terminals 1, 2 and 3.
+
+       Vacuum suction    gripper
+       (VGR)
+PWM 1  Y(Vertical)
+PWM 2
+PWM 3  Z(Horizontal)
+PWM 4
+       X(Turn)
+
+Assigning the PWM jumper:
+The jumpers should be inserted on the left for PWM for this task. The motors are controlled via a relay and supplied
+with power via the associated PWM terminals.
+
+ The jumpers are on the adapter board
+
+You can specify whole numbers (integer format) on the outputs for the PWM signals in the PLC program, and
+thereby control the speed. A low speed should be specified here for all axes with a value of 400.
+
+146
+Information on positioning
+Due to the low speed of the 3 axes, it is enough to detect pulse 1 from the respective encoder in the normal cyclical
+organisational block OB1 for positioning.
+A simple counter can be used to count the pulses in the program. The value can then be compared.
+You can determine the number of pulses for the required positions by activating the individual axes and observing
+the counter value.
+
+Programming task 6:
+Multi-processing station with oven (MPO); sequence with pulse width modulation (PWM) and
+parallel actions
+
+Task:
+In the multi-processing station with oven (MPO), workpieces should undergo a burning process before they are
+sawed and then transported to the next station.
+
+The motors for vacuum suction and turntable movements are controlled via a relay and supplied with power via
+the associated PWM terminals. The motor speed can be set using the output signals from pulse width modulation
+(PWM).
+
+First, a workpiece must be placed manually on the turntable.
+Press the START button to start the process for a workpiece.
+At the same time, the oven will open, the turntable will turn to the position at the vacuum, and the vacuum will
+move to the turntable.
+Then the vacuum will move down, switch on and lift the workpiece from the turntable.
+While the linear axis moves to the oven, the extension there is extended.
+Once it has arrived at the oven, the vacuum gripper will place the workpiece on the extension. The extension will
+retract, the oven door will close and the burning process will be carried out for 5 seconds.
+Then the oven door will open again, the extension will be extended, and the vacuum gripper will pick up the
+workpiece once again to move it back to the turntable.
+The turntable will then position the workpiece under the saw. The saw will process it for 5 seconds.
+Then the workpiece will be turned into position on the belt and pushed to the extension cylinder on the belt there.
+The conveyor belt will transport the workpiece to the light barrier at the end of the belt, where it can be removed
+manually.
+
+The program should be created in the programming language Structured Text (ST or SCL).
+To shorten the time for a production cycle, complete multiple actions at the same time in a single step if possible.
+The signals for pulse width modulation (PWM) and for the compressor should not be specified in the steps of the
+sequence, but rather in subsequent ongoing operation.
+
+147
+Planning
+1. In the TIA Portal, open the projectLearningFactory_4_0_24V_Task01_HWConf and save it under the name
+
+     LearningFactory_4_0_24V_Task06_MultiProcessingMPO.
+2. Copy the global variable table MPO-Multi-Processing station with oven, as shown in programming task 1,
+
+     from the library Library_LearningFactory_4_0_24V and insert it into your project.
+3. Check whether the jumpers for the power supply to the bi-directional motors are inserted so that they are fed
+
+     via the associated PWM terminals 1 and 3.
+4. Add to the monitoring table as shown in programming task 1, and check the function of I/O signals.
+5. Create a library-capable code module with the sequence in the programming language structured text (ST or
+
+     SCL).
+6. Create a new organisational module Main [OB1] in the programming language Structured Text (ST or SCL),
+
+     access the library-capable code module there and connect these with global variables.
+7. Load the complete program to the controller.
+8. Test the program using the vacuum suction gripper (VGR).
+9. Monitor the program online and correct any errors.
+10. Save and archive the project LearningFactory_4_0_24V_Task06_MultiProcessingMPO.
+
+148
+Programming information
+
+Information on pulse width modulation (PWM):
+
+ The bi-directional motors for the turntable and for horizontal movement of the vacuum on the linear axis are
+ controlled by relays and can be fed either directly via 24V of the actuators, or via the associated PWM terminals
+ 1 and 3.
+
+       Multi-processing      station
+       (MPO)
+PWM 1  Turntable
+PWM 2  - not assigned -
+PWM 3  Suction (Horizontal)
+PWM 4  Oven pusher
+
+Assigning the PWM jumper:
+The jumpers should be inserted on the left for PWM for this task. The motors are controlled via a relay and supplied
+with power via the associated PWM terminals.
+
+ The jumpers are on the adapter board
+
+You can specify whole numbers (integer format) on the outputs for the PWM signals in the PLC program, and
+thereby control the speed.
+
+149
+Programming task 7:
+Automated high-bay warehouse (HBW); sequence with pulse width modulation (PWM) and
+positioning function with encoder
+Task:
+The automated high-bay warehouse (HBW) station is designed to move a pallet from the top front position (position
+A1) and set it on the conveyor belt.
+The motors for stacker crane movements are controlled via a relay and supplied with power via the associated
+PWM terminals. The motor speed can be set using the output signals from pulse width modulation (PWM).
+The encoder should be used to precisely position the axes.
+Press the START button to start the process. First, the stacker crane moves the cantilever to the rear, then at the
+same time to the reference switch horizontally and forward out of the storage area, as well as upward vertically.
+In this reference position, positioning values are set to a reference value of 0.
+Then the stacker crane moves to the front top position (position A1) to extend. There, the cantilever is extended
+to move the vertical axis up briefly to lift the pallet. The cantilever will then move back.
+Then the stacker crane will move to the discharge position on the conveyor belt. There, the cantilever is extended
+once again to move the vertical axis down briefly to set down the pallet.
+The cantilever then moves back, while the conveyor belt transports the pallet to the light barrier at the outside
+end of the belt. The pallet must be removed manually before the process can be started once again.
+Press the STOP button to stop the process.
+The program should be created in the programming language Structured Text (ST or SCL).
+To shorten the time for a production cycle, complete multiple actions at the same time in a single step if possible.
+The signals for pulse width modulation (PWM) should not be specified in the steps of the sequence, but rather in
+subsequent ongoing operation.
+
+150
+Planning
+1. In the TIA Portal, open the projectLearningFactory_4_0_24V_Task01_HWConf and save it under the name
+
+     LearningFactory_4_0_24V_Task07_HighBayWarehouseHBW.
+2. Copy the global variable table HBW automated high-bay warehouse, as shown in programming task 1, from
+
+     the library Library_LearningFactory_4_0_24V and insert it into your project.
+3. Under programming modules, create a Positioning group and insert a wake alarm OB Cyclic Interrupt [OB30]
+
+     there according to the programming information with a cycle of 1000 µs. Read in the Encoder inputs in the
+     sub-process screen for this wake alarm OB.
+4. Copy the library module FB_INC_DEC for encoder evaluation from the library
+     Library_LearningFactory_4.0_24V and insert it into your project in the Positioning group.
+5. Create a global data block Positioning [DB90] in the Positioning group with a global variable for position (INT)
+     and direction (BOOL) for the horizontal and vertical axis.
+6. Access and activate the module FB_INC_DEC for encoder evaluation in the wake alarm OB Cyclic Interrupt
+     [OB30] for both the horizontal and vertical axes.
+7. Check whether the jumpers for the power supply to the bi-directional motors are inserted so that they are fed
+     via the associated PWM terminals 1, 2.3 and 4.
+8. As shown in programming task 1, add all input/output signals and the values from the global data block
+     Positioning [DB90] to the observation tables. Check the functions of the I/O signals and encoder analysis with
+     the help of the observation table, and determine position values for the positions required in the program.
+9. Create a library-capable code module with the sequence in the programming language structured text (ST or
+     SCL).
+10. Create a new organisational module Main [OB1] in the programming language Structured Text (ST or SCL),
+     access the library-capable code module there and connect these with global variables.
+11. Load the complete program to the controller.
+12. Test the program using the automated high-bay warehouse (HBW).
+13. Monitor the program online and correct any errors.
+14. Save and archive the project LearningFactory_4_0_24V_Task07_HighBayWarehouseHBW.
+
+151
+Programming information
+
+Information on pulse width modulation (PWM):
+
+ The bi-directional motors for the cantilever, for the conveyor belt, for the horizontal axis and the vertical axis are
+ controlled by relays and can be fed either directly via 24V of the actuators, or via the associated PWM terminals
+ 1, 2.3 and 4.
+
+PWM 1  High-bay warehouse
+PWM 2  (HBW)
+PWM 3  Conveyor belt
+PWM 4  X(Horizontal)
+       Y(Vertical)
+       Cantilever
+
+Assigning the PWM jumper:
+The jumpers should be inserted on the left for PWM for this task. The motors are controlled via a relay and supplied
+with power via the associated PWM terminals.
+
+ The jumpers are on the adapter board
+
+You can specify whole numbers (integer format) on the outputs for the PWM signals in the PLC program, and
+thereby control the speed.
+
+152
+Information on creating a wake alarm OB and reading in the encoder inputs
+Wake alarm OBs can be used to start program components at equidistant time intervals and read in inputs
+accordingly. Create a wake alarm OB with a 1ms cycle time as follows:
+
+The settings must be changed so that inputs in the sub-process screen (TPA 1) for this wake alarm OB must be
+read in for the assemblies for encoder inputs.
+
+153
+Information on positioning with the encoder and fischertechnik library module FB_INC_DEC
+In this programming task, tracks A+B and pulses 1 and 2 for the encoders must be recorded for the horizontal and
+vertical axes in a wake alarm organizational module with a cycle time of 1ms, in order to ensure precise positioning
+even with high speed movements.
+A module FB_INC_DEC has already been provided in the available library Library_LearningFactory_4_0_24V for
+encoder evaluation. It can simply be copied from there into the project.
+
+154
+The module FB_INC_DEC for encoder evaluation assesses the pulses for the two channels at the inputs #inx_CHa
+and #inx_CHb.
+This is used to determine the direction #outx_dir and a position value #outi_cnt and provide these as outputs.
+The input #inx_RST can be used to reset the position value to a reference value #ini_REF_val.
+
+The module FB_INC_DEC for encoder evaluation should be accessed and activated in a wake alarm OB for both
+the horizontal and vertical axes.
+The position values can be determined for the positions required in the program by activating the individual axes
+and monitoring the position values in the observation table. The reference position in each case is 0.
+
+155
+1. 2020 edition
+
+fischertechnik GmbH
+
+Klaus-Fischer-Straße 1  Ph: (+49) 7443 12 - 4369
+
+72178 Waldachtal        E-Mail: info@fischertechnik.de
+
+156
+

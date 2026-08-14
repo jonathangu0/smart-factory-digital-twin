@@ -1,0 +1,13 @@
+{
+  "servers": {
+    "isaac-sim": {
+      "type": "stdio",
+      "command": "C:/Users/icets/nvidia-omniverse-isaacsim-mcp-server/.venv/Scripts/omniverse-mcp.exe",
+      "args": [],
+      "env": {
+        "OMNIVERSE_WS_HOST": "localhost",
+        "OMNIVERSE_WS_PORT": "8766"
+      }
+    }
+  }
+}
