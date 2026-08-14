@@ -1,0 +1,16 @@
+# Python virtual environment — never shared; recreate with requirements.txt
+venv/
+.venv/
+
+# Python caches
+__pycache__/
+*.py[cod]
+
+# Runtime data — regenerated whenever the live feed runs
+factory_state.json
+factory_events.jsonl
+
+# Keep sample_recording.jsonl (the shipped offline demo) tracked.
+
+# OS junk
+.DS_Store

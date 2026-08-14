@@ -1,0 +1,6 @@
+# Python dependencies for this project. Install with:
+#   pip install -r requirements.txt
+#
+# Standard library covers most of it; these two are the only external libs.
+paho-mqtt==2.1.0     # MQTT client (live_data_feed.py, vgr_twin.py)
+asyncua==2.0.1       # OPC UA client (opcua/vgr_live.py, opcua/vgr_twin.py)
