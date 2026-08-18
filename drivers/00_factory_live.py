@@ -1,14 +1,9 @@
-"""LIVE digital twin of the whole Training Factory, driven by real OPC-UA tags.
+"""Live digital twin of the Training Factory, driven by OPC-UA tags.
 
-Polls the PLC (opc.tcp://192.168.0.1:4840) ~10x/s and mirrors real factory state:
-  * a glowing beacon jumps to whichever station is ACTIVE (State_*.x_active)
-  * a HUD shows order state, active station, VGR + HBW axis positions, and the
-    SLD color counters -- all live.
-
-Run a real cycle on the factory and the twin follows it in real time.
-
-Station scene positions (STATIONS) are best-guess on the baseplate and easy to
-tune -- the HUD names the active station unambiguously either way.
+Polls the PLC ~10x/s and mirrors factory state: a beacon marks the active
+station (State_*.x_active) and a HUD shows order state, VGR/HBW axis positions,
+and SLD color counters. STATIONS scene positions are best-guess on the
+baseplate and easy to tune.
 """
 import asyncio
 import threading
@@ -25,7 +20,6 @@ logging.getLogger("asyncua").setLevel(logging.CRITICAL)
 URL = "opc.tcp://192.168.0.1:4840"
 DB = 'ns=3;s="gtyp_Interface_Dashboard"."Subscribe".'   # dashboard prefix
 
-# station active flags
 ACTIVE = {
     "HBW": DB + '"State_HBW"."x_active"',
     "VGR": DB + '"State_VGR"."x_active"',
@@ -98,6 +92,7 @@ async def _loop():
 
 def _build_scene():
     stage = omni.usd.get_context().get_stage()
+    stage.SetEditTarget(stage.GetSessionLayer())  # runtime edits only; never bakes into the scene file
     # hide the old scripted cycle so only the live mirror shows
     for p in ("/World/Twin",):
         pr = stage.GetPrimAtPath(p)
@@ -164,7 +159,6 @@ def main():
         L["hbw"].text = f"HBW  h/v: {g('hbw_hor')} / {g('hbw_ver')}"
         L["sld"].text = f"SLD  B/W/R: {g('sld_blue')} / {g('sld_white')} / {g('sld_red')}"
 
-        # move + show the beacon on the active station; hide when idle
         if act and act in STATIONS:
             x, y = STATIONS[act]
             beacon_t.Set(Gf.Vec3d(x, y, Z_BEACON))

@@ -1,7 +1,7 @@
-"""MPO turntable: rotate the drehkranz disc (NAUO1016) AND the vacuum-gripper
-assembly mounted on it, about the turntable's vertical axis, in WORLD space.
-Auto-selects the mounted parts by radius so nothing else moves. Shows clear
-activity: indexes back-and-forth while State_MPO is active; holds at 0 when idle.
+"""MPO turntable: rotates the drehkranz disc (NAUO1016) and the vacuum-gripper
+assembly mounted on it about the turntable's vertical axis, in WORLD space.
+Auto-selects the mounted parts by radius so nothing else moves. Indexes
+back-and-forth while State_MPO is active; holds at 0 when idle.
 Force with builtins._mpo_test_angle (deg); None = live."""
 import omni.usd
 import omni.kit.app
@@ -19,7 +19,7 @@ SPEED = 55.0        # deg/sec while active
 
 def main():
     stage = omni.usd.get_context().get_stage()
-    stage.SetEditTarget(stage.GetRootLayer())
+    stage.SetEditTarget(stage.GetSessionLayer())  # runtime edits only; never bakes into the scene file
     mpo = stage.GetPrimAtPath(MPO)
     Pp = UsdGeom.XformCache().GetLocalToWorldTransform(mpo)
     Pinv = Pp.GetInverse()

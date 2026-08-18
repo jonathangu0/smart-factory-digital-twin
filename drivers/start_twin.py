@@ -1,10 +1,7 @@
 """One-click startup, run by START_LIVE_TWIN.bat via Isaac Sim's --exec flag.
-
-It: opens the twin scene, waits for the geometry to finish loading, then runs all
-station drivers so the LIVE twin is ready. The MCP server is enabled by the .bat.
-
-Paths come from the TWIN_REPO env var (set by the .bat); falls back to the default
-install path if run by hand.
+Opens the twin scene, waits for geometry to load, then runs all station drivers.
+Paths come from the TWIN_REPO env var (set by the .bat); falls back to the
+default install path if run by hand.
 """
 import os
 import omni.usd
@@ -20,7 +17,7 @@ DRIVERS = REPO + "/drivers"
 STARTUP = ["00_factory_live", "01_vgr", "02_hbw", "03_mpo", "04_sld",
            "05_vgr_workpiece", "camera_overview"]
 
-# a deep geometry prim -> proof the scene has actually loaded
+# a deep geometry prim; proof the scene has actually loaded
 READY_PRIM = "/World/TrainingFactory/World/Factory/Assembly/Part_5/NAUO2/NAUO2856"
 
 ctx = omni.usd.get_context()

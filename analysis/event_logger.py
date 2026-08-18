@@ -1,12 +1,12 @@
-"""Timestamped OPC-UA event logger -> JSONL for analysis.
+"""Timestamped OPC-UA event logger, writing JSONL for analysis.
 
-Polls the meaningful factory tags ~5x/s and appends a JSON line every time a
-value changes, with a UTC timestamp. Robust to session drops (read timeout +
-auto-reconnect). Run on the factory WiFi:
+Polls the factory tags ~5x/s and appends a JSON line whenever a value changes,
+with a UTC timestamp. Robust to session drops (read timeout + auto-reconnect).
+Run on the factory WiFi:
 
     python twin/opcua_discovery/event_logger.py
 
-Writes: twin/logs/factory_events.jsonl   (one JSON object per line)
+Writes twin/logs/factory_events.jsonl, one JSON object per line:
     {"ts": "...Z", "station": "VGR", "tag": "vgr_rot", "value": 677, "prev": 0}
 
 Ctrl+C to stop.

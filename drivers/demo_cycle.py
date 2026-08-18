@@ -1,7 +1,6 @@
-"""Gentle, realistic DEMO cycle so the whole twin moves cleanly (no wild swings /
-motion blur). VGR keeps a natural ready pose and does modest reaches; HBW makes a
-small travel to the transfer side and back; MPO turntable indexes slowly. Yields
-to live OPC-UA on reconnect. Toggle builtins._demo_mode."""
+"""Offline DEMO cycle that moves the whole twin cleanly. VGR does modest reaches,
+HBW travels to the transfer side and back, MPO indexes slowly. Yields to live
+OPC-UA on reconnect. Toggle builtins._demo_mode."""
 import omni.usd
 import omni.kit.app
 import builtins

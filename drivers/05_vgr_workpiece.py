@@ -1,6 +1,6 @@
-"""A workpiece puck that rides with the VGR gripper suction point so you can
-see it move through the cycle. Reads builtins._vgr_grip_pos (published by the
-VGR driver). Held whenever builtins._vgr_holding is True (default True)."""
+"""A workpiece puck that rides with the VGR gripper suction point. Reads
+builtins._vgr_grip_pos (published by the VGR driver). Held whenever
+builtins._vgr_holding is True (default True)."""
 import omni.usd
 import omni.kit.app
 import builtins
@@ -9,7 +9,7 @@ from pxr import UsdGeom, Gf, Vt
 
 def main():
     stage = omni.usd.get_context().get_stage()
-    stage.SetEditTarget(stage.GetRootLayer())
+    stage.SetEditTarget(stage.GetSessionLayer())  # runtime edits only; never bakes into the scene file
     builtins._vgr_holding = getattr(builtins, "_vgr_holding", True)
 
     p = UsdGeom.Cylinder.Define(stage, "/World/VGR_Workpiece")

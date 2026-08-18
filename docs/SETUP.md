@@ -1,8 +1,8 @@
 # Setup
 
-Everything you need to get from a fresh machine to a running twin. Three parts:
-**(A)** install the software, **(B)** get the scene onto your machine, and
-**(C)** connect to the physical factory (only needed for the live mirror).
+Getting from a fresh machine to a running twin. Three parts: (A) install the
+software, (B) get the scene onto your machine, and (C) connect to the physical
+factory (only needed for the live mirror).
 
 ---
 
@@ -32,8 +32,8 @@ WebSocket). You do **not** need it to run the twin by hand, but it is included:
   (`omni.mcp_extension`) enabled, listening on `localhost:8766`.
 - `.mcp.json` tells the AI tool how to reach that server.
 
-If you just want to run the twin yourself, skip this and use the built‑in
-**Script Editor** (Window → Script Editor).
+To run the twin yourself, skip this and use the built‑in **Script Editor**
+(Window → Script Editor).
 
 ---
 
@@ -48,10 +48,10 @@ git clone <your-repo-url>
 ```
 
 If you are **not** using Git LFS, make sure `assets/training_factory_official.bin`
-and `assets/training_factory_official.gltf` are present next to each other — the
+and `assets/training_factory_official.gltf` are present next to each other. The
 scene references the `.gltf`, which in turn loads the `.bin`.
 
-> **Why the relative path matters:** `scene/TrainingFactoryDigitalTwin.usd`
+> **The relative path matters.** `scene/TrainingFactoryDigitalTwin.usd`
 > references the geometry as `../assets/training_factory_official.gltf`. Keep the
 > `scene/` and `assets/` folders side by side and the scene loads anywhere you put
 > the repo.
@@ -65,12 +65,12 @@ completely offline.
 
 1. **Join the factory Wi‑Fi:** `TP-Link_8911`.
 2. **Check you can reach the PLC** at `192.168.0.1`. The twin reads OPC‑UA from
-   `opc.tcp://192.168.0.1:4840` (anonymous — no username/password).
+   `opc.tcp://192.168.0.1:4840` (anonymous, no username/password).
 3. Other services on the same network (not required by the twin, but handy):
    - Node‑RED dashboard: `http://192.168.0.5:1880`
    - MQTT broker: `192.168.0.10:1883` (user `txt`, password `xtx`)
 
-If the network drops, the live driver keeps trying to reconnect on its own — see
+If the network drops, the live driver keeps trying to reconnect on its own. See
 [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ---

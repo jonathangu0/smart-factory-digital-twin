@@ -23,15 +23,14 @@ VERTICAL = ["NAUO2857", "NAUO2858"]
 HORIZONTAL = ["NAUO2858"]
 
 # world point at the gripper suction cup when at home (published for the workpiece)
-SUCTION_HOME = Gf.Vec3d(0.153, -0.214, 0.176)
-# arm+gripper sit +0.108 in X off the tower; shift them onto the pillar so the
-# horizontal beam runs THROUGH the column (matches the documentation).
-ARM_CENTER_FIX = Gf.Vec3d(-0.108, 0.0, 0.0)
+SUCTION_HOME = Gf.Vec3d(0.045, -0.214, 0.176)
+# the scene geometry already has the arm centered on the column, so no extra shift.
+ARM_CENTER_FIX = Gf.Vec3d(0.0, 0.0, 0.0)
 
 
 def main():
     stage = omni.usd.get_context().get_stage()
-    stage.SetEditTarget(stage.GetRootLayer())
+    stage.SetEditTarget(stage.GetSessionLayer())  # runtime edits only; never bakes into the scene file
     vgr = stage.GetPrimAtPath(VGRP)
     Pp = UsdGeom.XformCache().GetLocalToWorldTransform(vgr)
     Pinv = Pp.GetInverse()

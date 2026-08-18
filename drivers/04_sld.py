@@ -22,9 +22,9 @@ COLOR_RGB = {"white": (0.92, 0.92, 0.92), "red": (0.85, 0.2, 0.15), "blue": (0.1
 
 def main():
     stage = omni.usd.get_context().get_stage()
-    stage.SetEditTarget(stage.GetRootLayer())
+    stage.SetEditTarget(stage.GetSessionLayer())  # runtime edits only; never bakes into the scene file
 
-    # three color bin markers at the stations so the sort target is visible
+    # color bin markers at the stations so the sort target is visible
     UsdGeom.Xform.Define(stage, "/World/SLD_Bins")
     for col, y in STATION.items():
         b = UsdGeom.Cylinder.Define(stage, f"/World/SLD_Bins/bin_{col}")
@@ -35,7 +35,6 @@ def main():
         xb = UsdGeom.Xformable(b); xb.ClearXformOpOrder()
         xb.AddTranslateOp().Set(Gf.Vec3d(BIN_X, y, BELT_Z - 0.002))
 
-    # the traveling workpiece
     p = UsdGeom.Cylinder.Define(stage, "/World/SLD_Workpiece")
     p.GetRadiusAttr().Set(0.013)
     p.GetHeightAttr().Set(0.008)
@@ -73,7 +72,7 @@ def main():
             if st_local["y"] > ey:                       # travel down the belt
                 st_local["y"] = max(ey, st_local["y"] - SPEED * dt)
                 top.Set(Gf.Vec3d(BELT_X, st_local["y"], BELT_Z))
-            else:                                         # at station -> eject +X into bin
+            else:                                         # at station: eject +X into bin
                 cur = top.Get()
                 nx = min(BIN_X, cur[0] + SPEED * dt)
                 top.Set(Gf.Vec3d(nx, ey, BELT_Z))

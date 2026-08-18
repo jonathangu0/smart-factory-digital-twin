@@ -1,10 +1,8 @@
-"""Full factory ORDER cycle animation: one product travels HBW -> VGR -> MPO ->
-VGR -> SLD -> VGR -> DPS, handed off between machines (it follows each machine's
-published tool position). Reference: fischertechnik Training Factory order flow.
-Drives the VGR / HBW / MPO poses in sync.
-
-Run AFTER the station drivers (00-05). Toggle with builtins._fullcycle.
-Disables the demo automatically."""
+"""Full ORDER cycle animation: one product travels HBW, VGR, MPO, VGR, SLD, VGR,
+DPS, handed off between machines (following each machine's published tool
+position). Reference: fischertechnik Training Factory order flow. Drives the
+VGR/HBW/MPO poses in sync. Run after the station drivers (00-05). Toggle with
+builtins._fullcycle; disables the demo automatically."""
 import omni.usd
 import omni.kit.app
 import builtins
@@ -57,7 +55,7 @@ def main():
     builtins._fc_t = getattr(builtins, "_fc_t", 0.0)
 
     stage = omni.usd.get_context().get_stage()
-    stage.SetEditTarget(stage.GetRootLayer())
+    stage.SetEditTarget(stage.GetSessionLayer())  # runtime edits only; never bakes into the scene file
     p = UsdGeom.Cylinder.Define(stage, "/World/Product")
     p.GetRadiusAttr().Set(0.013)
     p.GetHeightAttr().Set(0.009)

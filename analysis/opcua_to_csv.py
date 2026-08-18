@@ -56,7 +56,6 @@ def main():
         w.writeheader()
         w.writerows(rows)
 
-    # summary
     from collections import Counter
     per_station = Counter(r["station"] for r in rows)
     variables = sum(1 for r in rows if r["node_class"] == "Variable")

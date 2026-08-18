@@ -1,11 +1,11 @@
-"""Standalone OPC-UA discovery: recursively browse the PLC's entire address space
-and dump every node (NodeId, path, class, datatype, current value) to a catalog.
+"""Standalone OPC-UA discovery: recursively browse the PLC address space and dump
+every node (NodeId, path, class, datatype, value) to a JSON catalog.
 
-Run (on factory WiFi TP-Link_8911):
+Run on factory WiFi (TP-Link_8911):
     python twin/opcua_discovery/browse_opcua.py
 
-Writes: twin/opcua_discovery/opcua_catalog.json  (+ a printed summary of the
-top-level station structures like gtyp_VGR, gtyp_HBW, gtyp_MPO, gtyp_SLD ...).
+Writes twin/opcua_discovery/opcua_catalog.json plus a printed summary of the
+top-level station structures (gtyp_VGR, gtyp_HBW, gtyp_MPO, gtyp_SLD, ...).
 """
 import os
 import json
@@ -75,7 +75,6 @@ async def main():
     variables = [r for r in out if r["node_class"] == "Variable"]
     print(f"\nDISCOVERED {len(out)} nodes ({len(variables)} variables) -> {OUT}")
 
-    # summarize the station 'gtyp_*' structures
     groups = {}
     for r in out:
         bn = r.get("browse_name") or ""

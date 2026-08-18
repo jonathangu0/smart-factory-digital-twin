@@ -59,15 +59,13 @@ These map straight into `builtins._factory_state` (see
 These were produced by browsing the PLC and are useful for exploring or extending the
 twin.
 
-| File | What it is |
-|------|-----------|
-| `opcua_catalog.json` | Every node found by browsing the server — full tree with node IDs, names, and types. |
-| `opcua_nodes.csv` | The same nodes flattened into a spreadsheet for quick searching/filtering. |
-| `nodered_flows.json` | The factory's Node‑RED flows, exported for reference. |
-| `browse_opcua.py` | Re‑browse the live server and regenerate the catalog. |
-| `opcua_to_csv.py` | Convert the catalog JSON into the CSV. |
-| `event_logger.py` | Subscribe to the live tags and **timestamp every change to a JSONL file** for analysis. |
-| `sample_events.jsonl` | An example of that timestamped event log. |
+- `opcua_catalog.json`: every node found by browsing the server, a full tree with node IDs, names, and types.
+- `opcua_nodes.csv`: the same nodes flattened into a spreadsheet for quick searching and filtering.
+- `nodered_flows.json`: the factory's Node‑RED flows, exported for reference.
+- `browse_opcua.py`: re‑browse the live server and regenerate the catalog.
+- `opcua_to_csv.py`: convert the catalog JSON into the CSV.
+- `event_logger.py`: subscribe to the live tags and timestamp every change to a JSONL file for analysis.
+- `sample_events.jsonl`: an example of that timestamped event log.
 
 ### Re‑browsing the server
 On the factory network:
@@ -83,7 +81,7 @@ C:\isaacsim\python.bat analysis/event_logger.py     # -> JSONL, one line per cha
 ```
 
 Each line is a small JSON object like `{"t": "<ISO timestamp>", "node": "...", "value": ...}`,
-so you can replay or analyse a real run afterward.
+suitable for replaying or analysing a real run afterward.
 
 ---
 

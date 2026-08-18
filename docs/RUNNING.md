@@ -1,9 +1,9 @@
 # Running the twin
 
-This guide takes you from an open scene to a moving factory — live, demo, or full
-cycle — plus every live control you can tweak.
+From an open scene to a moving factory (live, demo, or full cycle), plus every live
+control you can tweak.
 
-All scripts live in `drivers/`. You run them inside Isaac Sim's **Script Editor**
+All scripts live in `drivers/`. Run them inside Isaac Sim's **Script Editor**
 (Window → Script Editor → open a file → Run), or via the MCP tooling if you set it
 up. Each script is self‑contained and safe to re‑run.
 
@@ -17,14 +17,14 @@ Launch Isaac Sim and open:
 scene/TrainingFactoryDigitalTwin.usd
 ```
 
-You should see the whole factory on a baseplate, lit, with the six stations. It is
+You should see the whole factory on a baseplate, lit, with the six stations. It stays
 static until you start the drivers.
 
 ---
 
 ## 2. Start the drivers (in order)
 
-Run these six once, in this order. `00_factory_live.py` **must be first** — it
+Run these six once, in this order. `00_factory_live.py` **must be first**; it
 creates the shared live‑state object the other drivers read.
 
 | Order | Script | What it starts |
@@ -44,22 +44,22 @@ Now choose a mode below.
 
 Nothing else to run. If you are on the factory network (see
 [SETUP.md](SETUP.md#c-connect-to-the-physical-factory-live-mirror-only)), the HUD
-shows **● LIVE — connected to PLC**. **Run an order on the real factory** and the
+shows **LIVE - connected to PLC**. Run an order on the real factory and the
 twin follows it: the beacon jumps to the active station, and the VGR/HBW positions
 track the real axes in real time.
 
-When the factory is idle (`order: WAITING_FOR_ORDER`) nothing moves — that is
-correct, the twin is faithfully showing an idle factory.
+When the factory is idle (`order: WAITING_FOR_ORDER`) nothing moves. That is correct;
+the twin is showing an idle factory.
 
 ## 3b. Offline demo (no hardware)
 
-Run `demo_cycle.py`. Every station moves through a slow, clean loop so you can see
-the mechanics working. It **automatically steps aside** the moment a real order
-runs, handing back to live data.
+Run `demo_cycle.py`. Every station moves through a slow, clean loop that shows
+the mechanics working. It steps aside the moment a real order runs, handing back to
+live data.
 
 ## 3c. Full order cycle (one product, whole factory)
 
-Run `full_cycle.py`. An **orange product** travels the documented order flow:
+Run `full_cycle.py`. An orange product travels the documented order flow:
 
 ```
 HBW bay → HBW fork → VGR → MPO turntable → VGR → SLD belt → colour bin → VGR → DPS
@@ -76,8 +76,8 @@ builtins._fc_t = 0.0
 
 ## 4. Camera & screenshots
 
-- `camera_overview.py` — frames the entire factory and makes that camera active.
-- `screenshot.py` — saves the current view to `shots/twin.png`. Run it in a
+- `camera_overview.py` frames the entire factory and makes that camera active.
+- `screenshot.py` saves the current view to `shots/twin.png`. Run it in a
   **separate** step from any camera change (there is a one‑frame timing race if you
   change the camera and capture in the same call).
 
@@ -85,8 +85,8 @@ builtins._fc_t = 0.0
 
 ## 5. Live controls (paste into the Script Editor)
 
-The drivers communicate through a few `builtins` flags you can set live — no reload
-needed.
+The drivers communicate through a few `builtins` flags you can set live, with no
+reload needed.
 
 **Switch modes**
 ```python
@@ -139,9 +139,9 @@ builtins._mpo_test_angle = None
 | Symptom | Fix |
 |---------|-----|
 | HUD says **offline** | Check you are on `TP-Link_8911` and can ping `192.168.0.1`. The driver auto‑reconnects. |
-| Nothing moves in live mode | The factory is idle — start an order on the real machine. |
+| Nothing moves in live mode | The factory is idle; start an order on the real machine. |
 | A station is frozen | A leftover manual override is pinning it. Clear it: set its `_..._test_pose` / `_hbw_fork_target` / `_mpo_test_angle` to `None`. |
 | Scene opens but geometry is missing | `assets/` isn't next to `scene/`, or the `.bin` didn't download (Git LFS). See [SETUP.md](SETUP.md#b-get-the-scene). |
 | Two things move at once | The demo *and* full cycle are both on. Turn one off (section 5). |
 
-More on how it all fits together: **[ARCHITECTURE.md](ARCHITECTURE.md)**.
+More on how it all fits together in **[ARCHITECTURE.md](ARCHITECTURE.md)**.

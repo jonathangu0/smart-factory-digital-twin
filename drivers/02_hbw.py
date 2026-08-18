@@ -1,8 +1,7 @@
-"""HBW stacker crane: moves along the rack (WORLD Y) and the fork lifts (WORLD Z),
-computed in WORLD space. 9 flat pucks in the rack. Adds precise fork-position
-control (put the fork exactly at a bay or the VGR transfer point) and a workpiece
-that rides the fork so you can watch it carried from the bay to the VGR meeting
-point. Live OPC-UA still drives it via hor/ver counts."""
+"""HBW stacker crane: travels along the rack (WORLD Y) and lifts the fork
+(WORLD Z), computed in WORLD space. Holds 9 flat pucks. Supports precise
+fork-position control (a bay or the VGR transfer point) and a workpiece that
+rides the fork. Driven live by OPC-UA hor/ver counts."""
 import omni.usd
 import omni.kit.app
 import builtins
@@ -12,13 +11,12 @@ HBW = "/World/TrainingFactory/World/Factory/Assembly/Part_5/NAUO11"
 CRANE = ["NAUO47", "NAUO48", "NAUO49"]   # mast + fork carriage + fork arm
 FORK = ["NAUO48", "NAUO49"]              # lifts vertically on the mast
 
-# rack bays (flat pucks)
 SLOT_X = -0.239
 SLOT_Y = [0.112, 0.022, -0.068]
 SLOT_Z = [0.120, 0.180, 0.234]
 COLORS = [(0.1, 0.4, 0.9), (0.85, 0.2, 0.15), (0.92, 0.92, 0.92)]
 
-# fork reference (NAUO49) home pose -> used for precise positioning
+# fork reference (NAUO49) home pose, used for precise positioning
 FORK_HOME = Gf.Vec3d(-0.310, 0.110, 0.229)
 CARRY_OFFSET = Gf.Vec3d(0.055, 0.0, 0.006)   # puck sits on the tines, toward the rack
 
@@ -32,7 +30,7 @@ H_OFFSET_Y = 0.23
 
 def main():
     stage = omni.usd.get_context().get_stage()
-    stage.SetEditTarget(stage.GetRootLayer())
+    stage.SetEditTarget(stage.GetSessionLayer())  # runtime edits only; never bakes into the scene file
 
     UsdGeom.Xform.Define(stage, "/World/HBW_Workpieces")
     for zi, z in enumerate(SLOT_Z):
@@ -46,7 +44,6 @@ def main():
             xf.AddTranslateOp().Set(Gf.Vec3d(SLOT_X, y, z))
     print("placed 9 flat workpieces")
 
-    # workpiece carried on the fork
     carry = UsdGeom.Cylinder.Define(stage, "/World/HBW_Carry")
     carry.GetRadiusAttr().Set(0.013)
     carry.GetHeightAttr().Set(0.008)
@@ -79,7 +76,7 @@ def main():
             xf.GetOrderedXformOps()[0].Set(L0 * wdelta(V))
         builtins._hbw_fork_pos = (FORK_HOME[0], FORK_HOME[1] + yt, FORK_HOME[2] - zt)
 
-    def apply(hor, ver):  # OPC-UA counts -> shifted to match the demo's Y range
+    def apply(hor, ver):  # OPC-UA counts, shifted to match the demo's Y range
         off = getattr(builtins, "_hbw_h_offset", H_OFFSET_Y)
         move(H_SIGN * (hor / HBW_H_MAX) * Y_TRAVEL - off, V_SIGN * (ver / HBW_V_MAX) * Z_TRAVEL)
 

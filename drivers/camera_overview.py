@@ -1,4 +1,4 @@
-"""Frame the whole factory (camera only -- does NOT touch poses/demo)."""
+"""Frame the whole factory. Camera only; does not touch poses or demo."""
 import omni.usd
 from pxr import Usd, UsdGeom, Gf
 
